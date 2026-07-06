@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pizzon — Admin Dashboard</title>
+    <style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --yellow: #FFC107;
+  --yellow-dark: #E6A800;
+  --red: #E53935;
+  --dark: #1a1a1a;
+  --gray: #666;
+  --light: #f5f4f1;
+  --white: #ffffff;
+  --border: #e4dfd6;
+  --sidebar-bg: #1a1a1a;
+  --sidebar-text: #c8c4bc;
+  --sidebar-active: #FFC107;
+  --radius: 10px;
+  --green: #2e7d32;
+  --green-bg: #e8f5e9;
+}
+
+body {
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background: var(--light);
+  color: var(--dark);
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ── Sidebar ── */
+.sidebar {
+  width: 220px;
+  background: var(--sidebar-bg);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  z-index: 50;
+}
+.sidebar-logo {
+  padding: 24px 20px 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.sidebar-logo .brand { font-size: 20px; font-weight: 800; color: #fff; }
+.sidebar-logo .brand span { color: var(--yellow); }
+.sidebar-logo .sub { font-size: 11px; color: rgba(255,255,255,0.35); margin-top: 2px; letter-spacing: 0.06em; text-transform: uppercase; }
+.sidebar-nav { padding: 16px 12px; flex: 1; }
+.nav-label { font-size: 10px; color: rgba(255,255,255,0.25); letter-spacing: 0.1em; text-transform: uppercase; padding: 8px 8px 4px; }
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 10px;
+  border-radius: 8px;
+  font-size: 13.5px;
+  color: var(--sidebar-text);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  margin-bottom: 2px;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+}
+.nav-item:hover { background: rgba(255,255,255,0.06); color: #fff; }
+.nav-item.active { background: rgba(255,193,7,0.15); color: var(--yellow); font-weight: 600; }
+.nav-item .icon { font-size: 16px; width: 20px; text-align: center; }
+.sidebar-footer {
+  padding: 16px 12px;
+  border-top: 1px solid rgba(255,255,255,0.07);
+}
+.view-site-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 10px;
+  background: rgba(255,193,7,0.12);
+  border: 1px solid rgba(255,193,7,0.25);
+  border-radius: 8px;
+  color: var(--yellow);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+  transition: background 0.15s;
+  text-decoration: none;
+}
+.view-site-btn:hover { background: rgba(255,193,7,0.22); }
+
+/* ── Main ── */
+.main {
+  margin-left: 220px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+.topbar {
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  padding: 0 28px;
+  height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 40;
+}
+.topbar-title { font-size: 16px; font-weight: 700; }
+.topbar-right { display: flex; align-items: center; gap: 12px; }
+.avatar {
+  width: 34px; height: 34px;
+  background: var(--yellow);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 13px; color: var(--dark);
+}
+.admin-name { font-size: 13px; font-weight: 500; }
+
+.content { padding: 28px; flex: 1; }
+
+/* ── Stats ── */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 28px;
+}
+@media(max-width:900px){ .stats-grid { grid-template-columns: repeat(2,1fr); } }
+.stat-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+}
+.stat-icon { font-size: 24px; margin-bottom: 10px; }
+.stat-label { font-size: 12px; color: var(--gray); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+.stat-val { font-size: 26px; font-weight: 800; color: var(--dark); }
+.stat-sub { font-size: 12px; color: var(--green); margin-top: 4px; }
+
+/* ── Section card ── */
+.section-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 24px;
+  overflow: hidden;
+}
+.section-head {
+  padding: 18px 22px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.section-head h2 { font-size: 15px; font-weight: 700; }
+.section-head p { font-size: 13px; color: var(--gray); margin-top: 2px; }
+.section-body { padding: 22px; }
+
+/* ── Upload form ── */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+@media(max-width:640px){ .form-grid { grid-template-columns: 1fr; } }
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+.form-group.full { grid-column: 1/-1; }
+label { font-size: 13px; font-weight: 600; color: var(--dark); }
+input[type=text], input[type=number], select, textarea {
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  padding: 9px 12px;
+  font-size: 14px;
+  font-family: inherit;
+  background: #faf9f7;
+  color: var(--dark);
+  outline: none;
+  transition: border-color 0.2s;
+  width: 100%;
+}
+input:focus, select:focus, textarea:focus { border-color: var(--yellow); background: #fff; }
+textarea { resize: vertical; min-height: 72px; }
+
+/* Image upload zone */
+.img-upload-zone {
+  border: 2px dashed var(--border);
+  border-radius: 10px;
+  padding: 28px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  position: relative;
+  background: #faf9f7;
+}
+.img-upload-zone:hover, .img-upload-zone.dragover { border-color: var(--yellow); background: #fffbee; }
+.img-upload-zone input { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+.upload-icon { font-size: 32px; margin-bottom: 8px; }
+.upload-text { font-size: 14px; font-weight: 600; color: var(--dark); }
+.upload-sub { font-size: 12px; color: var(--gray); margin-top: 4px; }
+.img-preview {
+  display: none;
+  width: 100%;
+  max-height: 160px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+/* Stars selector */
+.stars-select { display: flex; gap: 6px; margin-top: 2px; }
+.star-opt {
+  font-size: 22px;
+  cursor: pointer;
+  color: #ddd;
+  transition: color 0.1s;
+  line-height: 1;
+}
+.star-opt.on { color: var(--yellow); }
+
+/* Badge toggle */
+.badge-opts { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+.badge-opt {
+  padding: 5px 14px;
+  border-radius: 50px;
+  border: 1.5px solid var(--border);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+  background: none;
+  text-transform: capitalize;
+}
+.badge-opt.sel-none.active { background: #e8e8e8; border-color: #999; color: #333; }
+.badge-opt.sel-new.active { background: var(--green-bg); border-color: var(--green); color: var(--green); }
+.badge-opt.sel-hot.active { background: #fde8e8; border-color: var(--red); color: var(--red); }
+.badge-opt.sel-offer.active { background: #fff3e0; border-color: #e65100; color: #e65100; }
+
+/* Submit */
+.submit-btn {
+  background: var(--yellow);
+  border: none;
+  border-radius: 8px;
+  padding: 11px 28px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+  margin-top: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.submit-btn:hover { background: var(--yellow-dark); }
+.submit-btn:active { transform: scale(0.98); }
+
+/* Toast */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: var(--green);
+  color: #fff;
+  padding: 12px 22px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  z-index: 999;
+  transform: translateY(80px);
+  opacity: 0;
+  transition: all 0.3s;
+  pointer-events: none;
+}
+.toast.show { transform: translateY(0); opacity: 1; }
+
+/* ── Menu items table ── */
+.menu-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.menu-table th {
+  text-align: left;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--gray);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  background: #faf9f7;
+}
+.menu-table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+}
+.menu-table tr:last-child td { border-bottom: none; }
+.menu-table tr:hover td { background: #faf9f7; }
+.item-thumb {
+  width: 44px; height: 44px;
+  border-radius: 8px;
+  object-fit: cover;
+  background: var(--light);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.item-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.item-row-name { font-weight: 600; }
+.item-row-cat {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 50px;
+  font-size: 11px;
+  font-weight: 600;
+  background: #f0ede8;
+  color: var(--gray);
+  text-transform: capitalize;
+}
+.item-price-cell { font-weight: 700; color: var(--red); }
+.mini-stars { color: var(--yellow); font-size: 11px; letter-spacing: -1px; }
+.tbl-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 50px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.tbl-badge-new { background: var(--green-bg); color: var(--green); }
+.tbl-badge-hot { background: #fde8e8; color: var(--red); }
+.tbl-badge-offer { background: #fff3e0; color: #e65100; }
+
+.del-btn {
+  background: none;
+  border: 1px solid #fdd;
+  border-radius: 6px;
+  padding: 5px 10px;
+  color: var(--red);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.del-btn:hover { background: #fde8e8; }
+
+
+/* ── Testimonials ── */
+.testi-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:20px; }
+@media(max-width:900px){ .testi-grid{grid-template-columns:repeat(2,1fr);} }
+@media(max-width:560px){ .testi-grid{grid-template-columns:1fr;} }
+.testi-card { background:var(--white); border:1px solid var(--border); border-radius:var(--radius); padding:18px; display:flex; flex-direction:column; gap:12px; }
+.testi-card-head { display:flex; align-items:center; gap:12px; }
+.testi-avatar { width:52px; height:52px; border-radius:50%; object-fit:cover; border:2px solid var(--yellow); flex-shrink:0; background:var(--light); display:flex; align-items:center; justify-content:center; font-size:22px; overflow:hidden; }
+.testi-avatar img { width:100%; height:100%; object-fit:cover; }
+.testi-name { font-weight:700; font-size:14px; }
+.testi-stars { color:var(--yellow); font-size:13px; letter-spacing:-1px; }
+.testi-review { font-size:13px; color:var(--gray); line-height:1.6; font-style:italic; }
+.testi-actions { display:flex; gap:6px; margin-top:4px; }
+.edit-btn { background:none; border:1px solid var(--border); border-radius:6px; padding:5px 10px; color:var(--dark); font-size:12px; font-weight:600; cursor:pointer; transition:background .15s; }
+.edit-btn:hover { background:#f0ede8; border-color:#bbb; }
+.del-btn { background:none; border:1px solid #fdd; border-radius:6px; padding:5px 10px; color:var(--red); font-size:12px; font-weight:600; cursor:pointer; transition:background .15s; }
+.del-btn:hover { background:#fde8e8; }
+.action-cell { display:flex; gap:4px; align-items:center; }
+.edit-bar { display:none; background:#fff8e1; border:1.5px solid var(--yellow); border-radius:8px; padding:10px 16px; margin-bottom:18px; font-size:13px; font-weight:600; color:#7a5900; align-items:center; gap:12px; }
+.edit-bar.show { display:flex; }
+.cancel-edit-btn { background:none; border:1.5px solid #c8a000; border-radius:6px; padding:4px 12px; font-size:12px; font-weight:600; color:#7a5900; cursor:pointer; }
+.cancel-edit-btn:hover { background:#fff0b0; }
+
+.empty-tbl { text-align: center; padding: 40px; color: var(--gray); font-size: 14px; }
+
+/* toggle visibility */
+.page { display: none; }
+.page.active { display: block; }
+</style>
+  </head>
+  <body>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <div class="brand">Pizz<span>on</span></div>
+        <div class="sub">Admin Dashboard</div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-label">Main</div>
+        <button class="nav-item active" data-page="dashboard">
+          <span class="icon">📊</span> Dashboard
+        </button>
+        <button class="nav-item" data-page="add-item">
+          <span class="icon">➕</span> Add Menu Item
+        </button>
+        <button class="nav-item" data-page="manage">
+          <span class="icon">🍽️</span> Manage Menu
+        </button>
+        <button class="nav-item" data-page="testimonials">
+          <span class="icon">⭐</span> Testimonials
+        </button>
+        <div class="nav-label" style="margin-top:12px">Settings</div>
+        <button class="nav-item" data-page="dashboard">
+          <span class="icon">⚙️</span> Settings
+        </button>
+      </nav>
+      <div class="sidebar-footer">
+        <a class="view-site-btn" href="our-menu.html" target="_blank">
+          🔗 View Our Menu
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <div class="main">
+      <div class="topbar">
+        <div class="topbar-title" id="topbarTitle">Dashboard</div>
+        <div class="topbar-right">
+          <div class="admin-name">Admin</div>
+          <div class="avatar">A</div>
+        </div>
+      </div>
+
+      <div class="content">
+
+        <!-- Dashboard Page -->
+        <div class="page active" id="page-dashboard">
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-icon">🍽️</div>
+              <div class="stat-label">Total Items</div>
+              <div class="stat-val" id="stat-total">0</div>
+              <div class="stat-sub">in menu</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon">🍕</div>
+              <div class="stat-label">Pizzas</div>
+              <div class="stat-val" id="stat-pizzas">0</div>
+              <div class="stat-sub">category</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon">🎁</div>
+              <div class="stat-label">Offers</div>
+              <div class="stat-val" id="stat-offers">0</div>
+              <div class="stat-sub">active deals</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon">💰</div>
+              <div class="stat-label">Avg. Price</div>
+              <div class="stat-val" id="stat-avg">$0</div>
+              <div class="stat-sub">per item</div>
+            </div>
+          </div>
+
+          <div class="section-card">
+            <div class="section-head">
+              <div>
+                <h2>Recent Menu Items</h2>
+                <p>Last 5 items added to the menu</p>
+              </div>
+              <button class="submit-btn"
+                style="margin-top:0;padding:8px 16px;font-size:13px"
+                onclick="showPage('add-item')">+ Add Item</button>
+            </div>
+            <div class="section-body" style="padding:0">
+              <table class="menu-table">
+                <thead>
+                  <tr>
+                    <th>Image</th><th>Name</th><th>Category</th><th>Price</th><th>Stars</th><th>Badge</th><th></th>
+                  </tr>
+                </thead>
+                <tbody id="dashTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Add Item Page -->
+        <div class="page" id="page-add-item">
+          <div class="section-card">
+            <div class="section-head">
+              <div>
+                <h2>Add New Menu Item</h2>
+                <p>Fill in the details — it will appear live on the menu
+                  page</p>
+              </div>
+            </div>
+            <div class="section-body">
+              <div class="form-grid">
+
+                <!-- Image upload -->
+                <div class="form-group full">
+                  <label>Item Image</label>
+                  <div class="img-upload-zone" id="uploadZone">
+                    <input type="file" id="imgInput" accept="image/*">
+                    <img class="img-preview" id="imgPreview" alt="preview">
+                    <div id="uploadPlaceholder">
+                      <div class="upload-icon">📷</div>
+                      <div class="upload-text">Click or drag & drop image
+                        here</div>
+                      <div class="upload-sub">PNG, JPG, WEBP — max 5MB</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label>Item Name</label>
+                  <input type="text" id="itemName"
+                    placeholder="e.g. Margherita Pizza">
+                </div>
+
+                <div class="form-group">
+                  <label>Price ($)</label>
+                  <input type="number" id="itemPrice" placeholder="e.g. 45"
+                    min="1">
+                </div>
+
+                <div class="form-group">
+                  <label>Category</label>
+                  <select id="itemCat">
+                    <option value="all">All</option>
+                    <option value="slides">Slides</option>
+                    <option value="pizzas">Pizzas</option>
+                    <option value="offers">Offers</option>
+                    <option value="pasta">Pasta</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label>Rating</label>
+                  <div class="stars-select" id="starsSelect">
+                    <span class="star-opt on" data-val="1">★</span>
+                    <span class="star-opt on" data-val="2">★</span>
+                    <span class="star-opt on" data-val="3">★</span>
+                    <span class="star-opt on" data-val="4">★</span>
+                    <span class="star-opt on" data-val="5">★</span>
+                  </div>
+                </div>
+
+                <div class="form-group full">
+                  <label>Description</label>
+                  <textarea id="itemDesc"
+                    placeholder="Short description of the item..."></textarea>
+                </div>
+
+                <div class="form-group full">
+                  <label>Badge</label>
+                  <div class="badge-opts">
+                    <button class="badge-opt sel-none active"
+                      data-badge>None</button>
+                    <button class="badge-opt sel-new"
+                      data-badge="new">New</button>
+                    <button class="badge-opt sel-hot"
+                      data-badge="hot">Hot</button>
+                    <button class="badge-opt sel-offer"
+                      data-badge="offer">Offer</button>
+                  </div>
+                </div>
+
+              </div>
+              <button class="submit-btn" id="addItemBtn">➕ Add to Menu</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Manage Page -->
+        <div class="page" id="page-manage">
+          <div class="section-card">
+            <div class="section-head">
+              <div>
+                <h2>Manage Menu Items</h2>
+                <p>All items currently on the menu</p>
+              </div>
+              <button class="submit-btn"
+                style="margin-top:0;padding:8px 16px;font-size:13px"
+                onclick="showPage('add-item')">+ Add Item</button>
+            </div>
+            <div style="padding:0">
+              <table class="menu-table">
+                <thead>
+                  <tr>
+                    <th>Image</th><th>Name</th><th>Category</th><th>Price</th><th>Stars</th><th>Badge</th><th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="manageTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Testimonials Page -->
+    <div class="page" id="page-testimonials">
+
+      <!-- Add / Edit Testimonial Form -->
+      <div class="section-card" style="margin-bottom:24px">
+        <div class="section-head">
+          <div>
+            <h2 id="testiFormTitle">Add Testimonial</h2>
+            <p id="testiFormSubtitle">Upload client photo, name, review —
+              appears on our-menu.html</p>
+          </div>
+        </div>
+        <div class="section-body">
+          <div class="edit-bar" id="testiEditBar">
+            ✏️ Editing: <span id="testiEditingName">—</span>
+            <button class="cancel-edit-btn" onclick="cancelTestiEdit()">✕
+              Cancel</button>
+          </div>
+          <div class="form-grid">
+            <div class="form-group full">
+              <label>Client Photo</label>
+              <div class="img-upload-zone" id="testiUploadZone">
+                <input type="file" id="testiImgInput" accept="image/*">
+                <img class="img-preview" id="testiImgPreview" alt="preview">
+                <div id="testiUploadPlaceholder">
+                  <div class="upload-icon">👤</div>
+                  <div class="upload-text">Click or drag & drop client
+                    photo</div>
+                  <div class="upload-sub">PNG, JPG, WEBP — max 5MB</div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Client Name</label>
+              <input type="text" id="testiName" placeholder="e.g. Johan Doe">
+            </div>
+            <div class="form-group">
+              <label>Rating</label>
+              <div class="stars-select" id="testiStarsSelect">
+                <span class="star-opt on" data-tval="1">★</span>
+                <span class="star-opt on" data-tval="2">★</span>
+                <span class="star-opt on" data-tval="3">★</span>
+                <span class="star-opt on" data-tval="4">★</span>
+                <span class="star-opt on" data-tval="5">★</span>
+              </div>
+            </div>
+            <div class="form-group full">
+              <label>Review</label>
+              <textarea id="testiReview"
+                placeholder="Client review text..."></textarea>
+            </div>
+          </div>
+          <button class="submit-btn" id="addTestiBtn">⭐ Add Testimonial</button>
+          <button class="cancel-edit-btn" id="cancelTestiBtn"
+            style="display:none;margin-left:10px;padding:10px 18px;font-size:13px;"
+            onclick="cancelTestiEdit()">✕ Cancel Edit</button>
+        </div>
+      </div>
+
+      <!-- Manage Testimonials -->
+      <div class="section-card">
+        <div class="section-head">
+          <div><h2>All Testimonials</h2><p>Manage client reviews shown on
+              our-menu.html</p></div>
+        </div>
+        <div class="section-body" style="padding:16px 22px">
+          <div class="testi-grid" id="testiGrid">
+            <div class="empty-tbl" style="grid-column:1/-1">No testimonials yet.
+              Add one above.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+const MENU_KEY  = 'pizzon_menu_items';
+const TESTI_KEY = 'pizzon_testimonials';
+const STORAGE_KEY = MENU_KEY; // backward compat
+
+const SEED = [
+  { id:1, name:'Shrimp Foods',   price:35, cat:'slides', img:'', emoji:'🍤', stars:4, desc:'Crispy golden shrimp with tangy dipping sauce.', badge:null },
+  { id:2, name:'Cheese Pizza',   price:45, cat:'pizzas', img:'', emoji:'🍕', stars:5, desc:'Oven-baked thin crust loaded with triple cheese.', badge:null },
+  { id:3, name:'BBQ Chicken',    price:55, cat:'offers', img:'', emoji:'🍗', stars:5, desc:'Smoky BBQ sauce, grilled chicken, red onion.', badge:'offer' },
+  { id:4, name:'Spaghetti',      price:38, cat:'pasta',  img:'', emoji:'🍝', stars:5, desc:'Slow-cooked beef ragù on al-dente spaghetti.', badge:null },
+  { id:5, name:'Seafood Burger', price:75, cat:'slides', img:'', emoji:'🍔', stars:5, desc:'Grilled prawn & crab patty on a brioche bun.', badge:'hot' },
+];
+
+function loadItems() {
+  const raw = localStorage.getItem(MENU_KEY);
+  if (raw) return JSON.parse(raw);
+  localStorage.setItem(MENU_KEY, JSON.stringify(SEED));
+  return SEED;
+}
+function saveItems(items) { localStorage.setItem(MENU_KEY, JSON.stringify(items)); }
+
+function loadTestis() {
+  const raw = localStorage.getItem(TESTI_KEY);
+  return raw ? JSON.parse(raw) : [];
+}
+function saveTestis(items) { localStorage.setItem(TESTI_KEY, JSON.stringify(items)); }
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+/* ── Navigation ── */
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  document.querySelector(`[data-page="${name}"]`)?.classList.add('active');
+  const titles = { dashboard:'Dashboard', 'add-item':'Add Menu Item', manage:'Manage Menu', testimonials:'Testimonials' };
+  document.getElementById('topbarTitle').textContent = titles[name] || name;
+  if (name === 'dashboard')    renderDashboard();
+  if (name === 'manage')       renderManage();
+  if (name === 'testimonials') renderTestiGrid();
+}
+document.querySelectorAll('.nav-item').forEach(btn => {
+  btn.addEventListener('click', () => showPage(btn.dataset.page));
+});
+
+/* ── Dashboard ── */
+function renderDashboard() {
+  const items = loadItems();
+  document.getElementById('stat-total').textContent = items.length;
+  document.getElementById('stat-pizzas').textContent = items.filter(i => i.cat === 'pizzas').length;
+  document.getElementById('stat-offers').textContent = items.filter(i => i.cat === 'offers').length;
+  const avg = items.length ? Math.round(items.reduce((s,i) => s+i.price, 0) / items.length) : 0;
+  document.getElementById('stat-avg').textContent = '$' + avg;
+  renderTable('dashTableBody', items.slice(-5).reverse(), false);
+}
+
+function thumbHTML(item) {
+  if (item.img) return `<div class="item-thumb"><img src="${item.img}" alt="${item.name}"></div>`;
+  return `<div class="item-thumb">${item.emoji || '🍽️'}</div>`;
+}
+function badgeCellHTML(b) {
+  if (!b) return '<span style="color:#ccc">—</span>';
+  const cls = { new:'tbl-badge-new', hot:'tbl-badge-hot', offer:'tbl-badge-offer' };
+  return `<span class="tbl-badge ${cls[b]}">${b}</span>`;
+}
+function renderTable(tbodyId, items, showActions) {
+  const tbody = document.getElementById(tbodyId);
+  if (!items.length) {
+    tbody.innerHTML = `<tr><td colspan="7" class="empty-tbl">No menu items yet. <button style="color:var(--yellow);background:none;border:none;cursor:pointer;font-weight:600" onclick="showPage('add-item')">Add one →</button></td></tr>`;
+    return;
+  }
+  tbody.innerHTML = items.map(item => `
+    <tr>
+      <td>${thumbHTML(item)}</td>
+      <td><div class="item-row-name">${item.name}</div></td>
+      <td><span class="item-row-cat">${item.cat}</span></td>
+      <td class="item-price-cell">$${item.price}</td>
+      <td><span class="mini-stars">${'★'.repeat(item.stars)}${'☆'.repeat(5-item.stars)}</span></td>
+      <td>${badgeCellHTML(item.badge)}</td>
+      <td>${showActions ? `<div class="action-cell">
+        <button class="edit-btn" onclick="startEdit(${item.id})">✏️ Edit</button>
+        <button class="del-btn" onclick="deleteItem(${item.id})">🗑 Delete</button>
+      </div>` : ''}</td>
+    </tr>`).join('');
+}
+function renderManage() { renderTable('manageTableBody', loadItems(), true); }
+function deleteItem(id) {
+  if (!confirm('Delete this item?')) return;
+  saveItems(loadItems().filter(i => i.id !== id));
+  renderManage(); renderDashboard();
+  showToast('✓ Menu item deleted');
+}
+
+/* ── Menu Image Upload ── */
+let currentImgBase64 = '';
+const imgInput = document.getElementById('imgInput');
+const imgPreview = document.getElementById('imgPreview');
+const uploadPlaceholder = document.getElementById('uploadPlaceholder');
+const uploadZone = document.getElementById('uploadZone');
+
+imgInput.addEventListener('change', e => handleFile(e.target.files[0], 'menu'));
+uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.classList.add('dragover'); });
+uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('dragover'));
+uploadZone.addEventListener('drop', e => { e.preventDefault(); uploadZone.classList.remove('dragover'); handleFile(e.dataTransfer.files[0], 'menu'); });
+
+function handleFile(file, type) {
+  if (!file || !file.type.startsWith('image/')) { alert('Please select an image file.'); return; }
+  if (file.size > 5*1024*1024) { alert('Image must be under 5MB.'); return; }
+  const reader = new FileReader();
+  reader.onload = e => {
+    if (type === 'menu') {
+      currentImgBase64 = e.target.result;
+      imgPreview.src = currentImgBase64;
+      imgPreview.style.display = 'block';
+      uploadPlaceholder.style.display = 'none';
+    } else {
+      testiImgBase64 = e.target.result;
+      document.getElementById('testiImgPreview').src = testiImgBase64;
+      document.getElementById('testiImgPreview').style.display = 'block';
+      document.getElementById('testiUploadPlaceholder').style.display = 'none';
+    }
+  };
+  reader.readAsDataURL(file);
+}
+
+/* ── Stars (menu) ── */
+let selectedStars = 5;
+document.querySelectorAll('#starsSelect .star-opt').forEach(s => {
+  s.addEventListener('click', () => {
+    selectedStars = parseInt(s.dataset.val);
+    document.querySelectorAll('#starsSelect .star-opt').forEach(x =>
+      x.classList.toggle('on', parseInt(x.dataset.val) <= selectedStars));
+  });
+});
+
+/* ── Badge ── */
+let selectedBadge = '';
+document.querySelectorAll('.badge-opt').forEach(b => {
+  b.addEventListener('click', () => {
+    document.querySelectorAll('.badge-opt').forEach(x => x.classList.remove('active'));
+    b.classList.add('active');
+    selectedBadge = b.dataset.badge;
+  });
+});
+
+/* ── Menu Edit ── */
+let editingId = null;
+function startEdit(id) {
+  const item = loadItems().find(i => i.id === id);
+  if (!item) return;
+  editingId = id;
+  document.getElementById('itemName').value  = item.name;
+  document.getElementById('itemPrice').value = item.price;
+  document.getElementById('itemCat').value   = item.cat;
+  document.getElementById('itemDesc').value  = item.desc || '';
+  selectedStars = item.stars || 5;
+  document.querySelectorAll('#starsSelect .star-opt').forEach(x =>
+    x.classList.toggle('on', parseInt(x.dataset.val) <= selectedStars));
+  selectedBadge = item.badge || '';
+  document.querySelectorAll('.badge-opt').forEach(b => b.classList.remove('active'));
+  const ab = document.querySelector(`.badge-opt[data-badge="${selectedBadge}"]`);
+  if (ab) ab.classList.add('active');
+  else document.querySelector('.badge-opt.sel-none').classList.add('active');
+  currentImgBase64 = item.img || '';
+  if (item.img) { imgPreview.src=item.img; imgPreview.style.display='block'; uploadPlaceholder.style.display='none'; }
+  document.getElementById('formTitle').textContent    = '✏️ Edit Menu Item';
+  document.getElementById('formSubtitle').textContent = 'Update details and click Save Changes';
+  document.getElementById('addItemBtn').innerHTML     = '💾 Save Changes';
+  document.getElementById('editBar').classList.add('show');
+  document.getElementById('editingName').textContent  = item.name;
+  document.getElementById('cancelEditBtn').style.display = 'inline-flex';
+  showPage('add-item');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function cancelEdit() {
+  editingId = null; resetMenuForm();
+  document.getElementById('formTitle').textContent       = 'Add New Menu Item';
+  document.getElementById('formSubtitle').textContent    = 'Fill in the details — uploads directly to our-menu.html';
+  document.getElementById('addItemBtn').innerHTML        = '➕ Add to Menu';
+  document.getElementById('editBar').classList.remove('show');
+  document.getElementById('cancelEditBtn').style.display = 'none';
+}
+function resetMenuForm() {
+  document.getElementById('itemName').value=''; document.getElementById('itemPrice').value='';
+  document.getElementById('itemDesc').value=''; document.getElementById('itemCat').value='all';
+  selectedStars=5; selectedBadge='';
+  document.querySelectorAll('#starsSelect .star-opt').forEach(s=>s.classList.add('on'));
+  document.querySelectorAll('.badge-opt').forEach(b=>b.classList.remove('active'));
+  document.querySelector('.badge-opt.sel-none').classList.add('active');
+  currentImgBase64=''; imgPreview.style.display='none'; imgPreview.src='';
+  uploadPlaceholder.style.display='block'; imgInput.value='';
+}
+
+document.getElementById('addItemBtn').addEventListener('click', () => {
+  const name=document.getElementById('itemName').value.trim();
+  const price=parseInt(document.getElementById('itemPrice').value);
+  const cat=document.getElementById('itemCat').value;
+  const desc=document.getElementById('itemDesc').value.trim();
+  if (!name) { alert('Please enter item name.'); return; }
+  if (!price||price<1) { alert('Please enter a valid price.'); return; }
+  let items = loadItems();
+  if (editingId) {
+    items = items.map(i => i.id!==editingId ? i : {...i, name, price, cat, desc, img:currentImgBase64||i.img, emoji:categoryEmoji(cat), stars:selectedStars, badge:selectedBadge||null});
+    saveItems(items);
+    showToast('✅ Menu item updated on our-menu.html!');
+    cancelEdit(); setTimeout(()=>showPage('manage'),1000);
+  } else {
+    items.push({ id:Date.now(), name, price, cat, desc, img:currentImgBase64, emoji:categoryEmoji(cat), stars:selectedStars, badge:selectedBadge||null });
+    saveItems(items);
+    resetMenuForm();
+    showToast('✅ Added to our-menu.html!');
+    setTimeout(()=>showPage('manage'),1200);
+  }
+});
+function categoryEmoji(cat) {
+  return {pizzas:'🍕',slides:'🥪',offers:'🎁',pasta:'🍝',all:'🍽️'}[cat]||'🍽️';
+}
+
+/* ══════════════════════════════
+   TESTIMONIALS
+══════════════════════════════ */
+let testiImgBase64 = '';
+let editingTestiId = null;
+let testiStars = 5;
+
+const testiImgInput = document.getElementById('testiImgInput');
+const testiUploadZone = document.getElementById('testiUploadZone');
+testiImgInput.addEventListener('change', e => handleFile(e.target.files[0], 'testi'));
+testiUploadZone.addEventListener('dragover', e => { e.preventDefault(); testiUploadZone.classList.add('dragover'); });
+testiUploadZone.addEventListener('dragleave', () => testiUploadZone.classList.remove('dragover'));
+testiUploadZone.addEventListener('drop', e => { e.preventDefault(); testiUploadZone.classList.remove('dragover'); handleFile(e.dataTransfer.files[0], 'testi'); });
+
+/* Testi stars */
+document.querySelectorAll('#testiStarsSelect .star-opt').forEach(s => {
+  s.addEventListener('click', () => {
+    testiStars = parseInt(s.dataset.tval);
+    document.querySelectorAll('#testiStarsSelect .star-opt').forEach(x =>
+      x.classList.toggle('on', parseInt(x.dataset.tval) <= testiStars));
+  });
+});
+
+function renderTestiGrid() {
+  const grid = document.getElementById('testiGrid');
+  const items = loadTestis();
+  if (!items.length) {
+    grid.innerHTML = '<div class="empty-tbl" style="grid-column:1/-1">No testimonials yet. Add one above.</div>';
+    return;
+  }
+  grid.innerHTML = items.map(t => {
+    const img = t.img
+      ? `<div class="testi-avatar"><img src="${t.img}" alt="${t.name}"></div>`
+      : `<div class="testi-avatar">👤</div>`;
+    return `<div class="testi-card">
+      <div class="testi-card-head">
+        ${img}
+        <div>
+          <div class="testi-name">${t.name}</div>
+          <div class="testi-stars">${'★'.repeat(t.stars)}${'☆'.repeat(5-t.stars)}</div>
+        </div>
+      </div>
+      <div class="testi-review">"${t.review}"</div>
+      <div class="testi-actions">
+        <button class="edit-btn" onclick="startTestiEdit(${t.id})">✏️ Edit</button>
+        <button class="del-btn" onclick="deleteTesti(${t.id})">🗑 Delete</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+document.getElementById('addTestiBtn').addEventListener('click', () => {
+  const name   = document.getElementById('testiName').value.trim();
+  const review = document.getElementById('testiReview').value.trim();
+  if (!name)   { alert('Please enter client name.'); return; }
+  if (!review) { alert('Please enter a review.'); return; }
+  let items = loadTestis();
+  if (editingTestiId) {
+    items = items.map(t => t.id!==editingTestiId ? t : {...t, name, review, stars:testiStars, img:testiImgBase64||t.img});
+    saveTestis(items);
+    showToast('✅ Testimonial updated on our-menu.html!');
+    cancelTestiEdit();
+  } else {
+    items.push({ id:Date.now(), name, review, stars:testiStars, img:testiImgBase64 });
+    saveTestis(items);
+    resetTestiForm();
+    showToast('✅ Testimonial added to our-menu.html!');
+  }
+  renderTestiGrid();
+});
+
+function startTestiEdit(id) {
+  const t = loadTestis().find(x => x.id === id);
+  if (!t) return;
+  editingTestiId = id;
+  document.getElementById('testiName').value   = t.name;
+  document.getElementById('testiReview').value = t.review;
+  testiStars = t.stars || 5;
+  document.querySelectorAll('#testiStarsSelect .star-opt').forEach(x =>
+    x.classList.toggle('on', parseInt(x.dataset.tval) <= testiStars));
+  testiImgBase64 = t.img || '';
+  if (t.img) {
+    document.getElementById('testiImgPreview').src = t.img;
+    document.getElementById('testiImgPreview').style.display = 'block';
+    document.getElementById('testiUploadPlaceholder').style.display = 'none';
+  }
+  document.getElementById('testiFormTitle').textContent    = '✏️ Edit Testimonial';
+  document.getElementById('testiFormSubtitle').textContent = 'Update and click Save Changes';
+  document.getElementById('addTestiBtn').innerHTML         = '💾 Save Changes';
+  document.getElementById('testiEditBar').classList.add('show');
+  document.getElementById('testiEditingName').textContent  = t.name;
+  document.getElementById('cancelTestiBtn').style.display  = 'inline-flex';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function cancelTestiEdit() {
+  editingTestiId = null;
+  resetTestiForm();
+  document.getElementById('testiFormTitle').textContent    = 'Add Testimonial';
+  document.getElementById('testiFormSubtitle').textContent = 'Upload client photo, name, review — appears on our-menu.html';
+  document.getElementById('addTestiBtn').innerHTML         = '⭐ Add Testimonial';
+  document.getElementById('testiEditBar').classList.remove('show');
+  document.getElementById('cancelTestiBtn').style.display  = 'none';
+}
+
+function resetTestiForm() {
+  document.getElementById('testiName').value=''; document.getElementById('testiReview').value='';
+  testiStars=5; testiImgBase64='';
+  document.querySelectorAll('#testiStarsSelect .star-opt').forEach(s=>s.classList.add('on'));
+  document.getElementById('testiImgPreview').style.display='none';
+  document.getElementById('testiImgPreview').src='';
+  document.getElementById('testiUploadPlaceholder').style.display='block';
+  testiImgInput.value='';
+}
+
+function deleteTesti(id) {
+  if (!confirm('Delete this testimonial?')) return;
+  saveTestis(loadTestis().filter(t => t.id !== id));
+  renderTestiGrid();
+  showToast('✓ Testimonial deleted');
+}
+
+// Init
+renderDashboard();
+
+</script>
+  </body>
+</html>
