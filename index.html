@@ -232,7 +232,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 				</div>
 				<div class="wow fadeInLeft">
 					<div class="our-menu-content right-padding">
-						<div class="menu-slider owl-carousel">
+						<div class="menu-slider owl-carousel" id="index-menu-slider">
 							<div class="menu-item-box rotate-img">
 								<div class="menu-item-img">
 									<a href="shop-detail.html"><img src="images/pizza-4.png"
@@ -1173,70 +1173,137 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 		<script src="js/animation.js"></script>
 		<script src="js/owl.carousel.min.js"></script>
 		<script src="js/pizzon.js"></script>
+
+		<!-- ✅ Admin Panel Inject: Menu Items + Testimonials for index.html -->
+		<script>
+	(function () {
+	  var MENU_KEY  = 'pizzon_menu_items';
+	  var TESTI_KEY = 'pizzon_testimonials';
+
+	  /* ── Styles ── */
+	  function addStyles() {
+	    if (document.getElementById('adm-idx-style')) return;
+	    var s = document.createElement('style');
+	    s.id = 'adm-idx-style';
+	    s.textContent =
+	      '.adm-menu-item .menu-item-img{overflow:hidden}' +
+	      '.adm-menu-item .menu-item-img img{width:100%;height:200px;object-fit:cover;display:block}' +
+	      '.adm-badge{position:absolute;top:10px;left:10px;padding:3px 10px;border-radius:50px;' +
+	      'font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;z-index:2;pointer-events:none}' +
+	      '.adm-new{background:#e8f5e9;color:#2e7d32}' +
+	      '.adm-hot{background:#fde8e8;color:#e53935}' +
+	      '.adm-offer{background:#fff3e0;color:#e65100}' +
+	      '.adm-testi .client-image img{width:80px;height:80px;object-fit:cover;border-radius:50%;border:3px solid #FFC107}';
+	    document.head.appendChild(s);
+	  }
+
+	  /* ════ MENU ITEMS ════ */
+	  function buildMenuCard(item) {
+	    var imgSrc = item.img ? item.img : 'images/pizza-1.png';
+	    var badge = item.badge
+	      ? '<span class="adm-badge adm-' + item.badge + '">' + item.badge + '</span>' : '';
+	    var stars = '';
+	    for (var i = 0; i < 5; i++)
+	      stars += '<li><i class="fa fa-star' + (i >= item.stars ? '-o' : '') + '" aria-hidden="true"></i></li>';
+	    return '<div class="menu-item-box rotate-img adm-menu-item" data-aid="' + item.id + '" style="position:relative">'
+	      + '<div class="menu-item-img" style="position:relative">'
+	      + '<a href="shop-detail.html"><img src="' + imgSrc + '" alt="' + item.name + '"></a>'
+	      + badge
+	      + '</div>'
+	      + '<div class="menu-item-info">'
+	      + '<div class="menu-item-head">'
+	      + '<div class="menu-item-title"><h5><a href="shop-detail.html">' + item.name + '</a></h5></div>'
+	      + '<div class="menu-item-price"><span>$' + parseFloat(item.price).toFixed(2) + '</span></div>'
+	      + '</div>'
+	      + '<div class="item-rating"><ul>' + stars + '</ul></div>'
+	      + '<div class="menu-item-des"><p>' + (item.desc || '') + '</p></div>'
+	      + '<div class="menu-item-order">'
+	      + '<a href="shop-detail.html" class="btn-ct btn-small">'
+	      + '<img src="images/cart-icon-white.png" alt="Cart Icon"> Order Now</a>'
+	      + '</div></div></div>';
+	  }
+
+	  function injectMenuItems() {
+	    document.querySelectorAll('.adm-menu-item').forEach(function(el){ el.remove(); });
+	    var raw = localStorage.getItem(MENU_KEY);
+	    if (!raw) return;
+	    var items; try { items = JSON.parse(raw); } catch(e){ return; }
+	    if (!items || !items.length) return;
+	    var slider = document.getElementById('index-menu-slider');
+	    if (!slider) return;
+	    items.forEach(function(item) {
+	      slider.insertAdjacentHTML('beforeend', buildMenuCard(item));
+	    });
+	    /* reinit owl carousel */
+	    reinitOwl(slider);
+	  }
+
+	  /* ════ TESTIMONIALS ════ */
+	  function buildTestiCard(t) {
+	    var imgSrc = t.img ? t.img : 'images/client-1.jpg';
+	    var stars = '';
+	    for (var i = 0; i < 5; i++)
+	      stars += '<li><i class="fa fa-star' + (i >= t.stars ? '-o' : '') + '" aria-hidden="true"></i></li>';
+	    return '<div class="testimonial-box adm-testi" data-tid="' + t.id + '">'
+	      + '<div class="client-image"><img src="' + imgSrc + '" alt="' + t.name + '"></div>'
+	      + '<div class="client-info">'
+	      + '<div class="client-name">' + t.name + '</div>'
+	      + '<div class="client-desc"><p>&#8220;' + t.review + '&#8221;</p></div>'
+	      + '<div class="testimonial-rating"><ul>' + stars + '</ul></div>'
+	      + '</div></div>';
+	  }
+
+	  function injectTestimonials() {
+	    document.querySelectorAll('.adm-testi').forEach(function(el){ el.remove(); });
+	    var raw = localStorage.getItem(TESTI_KEY);
+	    if (!raw) return;
+	    var items; try { items = JSON.parse(raw); } catch(e){ return; }
+	    if (!items || !items.length) return;
+	    var slider = document.getElementById('index-testi-slider');
+	    if (!slider) return;
+	    items.forEach(function(t) {
+	      slider.insertAdjacentHTML('beforeend', buildTestiCard(t));
+	    });
+	    reinitOwl(slider);
+	  }
+
+	  /* ── Reinit owl carousel ── */
+	  function reinitOwl(el) {
+	    if (!window.jQuery || !jQuery.fn.owlCarousel) return;
+	    try {
+	      var $el = jQuery(el);
+	      if ($el.hasClass('owl-loaded')) { $el.trigger('destroy.owl.carousel'); $el.removeClass('owl-loaded owl-drag'); }
+	      $el.owlCarousel({
+	        loop: true, margin: 30, nav: false, dots: true,
+	        autoplay: true, autoplayTimeout: 3000,
+	        responsive: { 0:{items:1}, 600:{items:2}, 1000:{items:3} }
+	      });
+	    } catch(e) {}
+	  }
+
+	  /* ── Init ── */
+	  function init() {
+	    addStyles();
+	    injectMenuItems();
+	    injectTestimonials();
+	    window.addEventListener('storage', function(e) {
+	      if (e.key === MENU_KEY)  injectMenuItems();
+	      if (e.key === TESTI_KEY) injectTestimonials();
+	    });
+	  }
+
+	  /* wait for owl carousel to be initialized by pizzon.js first */
+	  if (document.readyState === 'loading') {
+	    document.addEventListener('DOMContentLoaded', function(){ setTimeout(init, 800); });
+	  } else {
+	    setTimeout(init, 800);
+	  }
+	})();
+	</script>
 		<script defer
 			src="https://static.cloudflareinsights.com/beacon.min.js/v833ccba57c9e4d2798f2e76cebdd09a11778172276447"
 			integrity="sha512-57MDmcccJXYtNnH+ZiBwzC4jb2rvgVCEokYN+L/nLlmO8rfYT/gIpW2A569iJ/3b+0UEasghjuZH/ma3wIs/EQ=="
 			data-cf-beacon='{"version":"2024.11.0","token":"95ce996e22464a04b4191c57cd580e67","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}'
 			crossorigin="anonymous"></script>
-
-		<!-- Admin Testimonials Inject -->
-		<script>
-	(function(){
-	  var KEY = 'pizzon_testimonials';
-
-	  function addStyles(){
-	    if(document.getElementById('adm-testi-style')) return;
-	    var s = document.createElement('style');
-	    s.id = 'adm-testi-style';
-	    s.textContent =
-	      '.adm-testi .client-image img{width:80px;height:80px;object-fit:cover;border-radius:50%;border:3px solid #FFC107;}';
-	    document.head.appendChild(s);
-	  }
-
-	  function buildCard(t){
-	    var imgSrc = t.img ? t.img : 'images/client-1.jpg';
-	    var stars = '';
-	    for(var i=0;i<5;i++)
-	      stars += '<li><i class="fa fa-star'+(i>=t.stars?'-o':'')+'" aria-hidden="true"></i></li>';
-	    return '<div class="testimonial-box adm-testi" data-tid="'+t.id+'">'
-	      +'<div class="client-image"><img src="'+imgSrc+'" alt="'+t.name+'"></div>'
-	      +'<div class="client-info">'
-	      +'<div class="client-name">'+t.name+'</div>'
-	      +'<div class="client-desc"><p>&#8220;'+t.review+'&#8221;</p></div>'
-	      +'<div class="testimonial-rating"><ul>'+stars+'</ul></div>'
-	      +'</div></div>';
-	  }
-
-	  function inject(){
-	    document.querySelectorAll('#index-testi-slider .adm-testi').forEach(function(el){el.remove();});
-	    var raw = localStorage.getItem(KEY);
-	    if(!raw) return;
-	    var items; try{ items=JSON.parse(raw); }catch(e){ return; }
-	    if(!items||!items.length) return;
-	    var slider = document.getElementById('index-testi-slider');
-	    if(!slider) return;
-	    items.forEach(function(t){ slider.insertAdjacentHTML('beforeend', buildCard(t)); });
-	    /* reinit owl carousel */
-	    if(window.jQuery && jQuery.fn.owlCarousel){
-	      try{
-	        var $s = jQuery(slider);
-	        if($s.hasClass('owl-loaded')){ $s.trigger('destroy.owl.carousel'); $s.removeClass('owl-loaded owl-drag'); }
-	        $s.owlCarousel({loop:true,margin:30,nav:false,dots:true,autoplay:true,autoplayTimeout:3500,
-	          responsive:{0:{items:1},600:{items:2},1000:{items:3}}});
-	      }catch(e){}
-	    }
-	  }
-
-	  function init(){
-	    addStyles();
-	    inject();
-	    window.addEventListener('storage',function(e){ if(e.key===KEY) inject(); });
-	  }
-
-	  document.readyState==='loading'
-	    ? document.addEventListener('DOMContentLoaded',function(){ setTimeout(init,800); })
-	    : setTimeout(init,800);
-	})();
-	</script>
 	</body>
 </html>
