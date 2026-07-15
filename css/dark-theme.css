@@ -1,0 +1,185 @@
+/* =============================================
+   Pizzon — Dark Theme CSS  (external file)
+   Place in: css/dark-theme.css
+   Light = default | Dark = body.dark-mode
+============================================= */
+
+/* Smooth transitions on every switch */
+body, body * {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* ── Toggle Button (light mode default) ── */
+#theme-toggle {
+  background: none;
+  border: 2px solid transparent;
+  border-radius: 50px;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  line-height: 1;
+  color: #111111;
+  transition: all 0.3s ease;
+}
+#theme-toggle:hover {
+  border-color: #fbb200;
+  background: rgba(251,178,0,0.12);
+}
+.theme-icon-sun  { display: inline; }
+.theme-icon-moon { display: none; }
+
+/* ═══════════════════════════════════════════
+   DARK MODE  —  scoped to body.dark-mode
+═══════════════════════════════════════════ */
+
+/* Base */
+body.dark-mode                        { background-color: #121212; color: #aaaaaa; }
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4,
+body.dark-mode h5,
+body.dark-mode h6                     { color: #ffffff; }
+body.dark-mode a                      { color: #e0e0e0; }
+body.dark-mode a:hover                { color: #fbb200; }
+body.dark-mode p                      { color: #aaaaaa; }
+
+/* Toggle button in dark */
+body.dark-mode #theme-toggle          { color: #e0e0e0; }
+body.dark-mode .theme-icon-sun        { display: none; }
+body.dark-mode .theme-icon-moon       { display: inline; }
+
+/* Header */
+body.dark-mode header,
+body.dark-mode header.fixed           { background: #1a1a1a; box-shadow: 0 0 10px rgba(0,0,0,0.6); }
+body.dark-mode header.header-border::after { background: #444444; }
+body.dark-mode .header-vacter         { opacity: 0.06; }
+
+/* Nav */
+body.dark-mode .menu > ul > li > a                        { color: #e0e0e0; }
+body.dark-mode .menu > ul > li:hover > a,
+body.dark-mode .menu > ul > li.active > a                 { color: #fbb200; }
+body.dark-mode .menu > ul > li > a:before,
+body.dark-mode .menu > ul > li:hover > a:before,
+body.dark-mode .menu > ul > li.active > a:before          { background: #fbb200; }
+body.dark-mode .menu > ul ul                              { background: #2a2a2a; border: 1px solid #3a3a3a; }
+body.dark-mode .menu > ul ul li a                         { color: #e0e0e0; }
+body.dark-mode .menu > ul ul li:hover a,
+body.dark-mode .menu > ul ul li.active a                  { color: #fbb200; }
+
+/* Sidemenu */
+body.dark-mode .sidemenu-header,
+body.dark-mode .sidemenu-body,
+body.dark-mode .menu .sidemenu-header { background: #1e1e1e; border-color: #333333; }
+body.dark-mode .sidemenu-menu ul li a { color: #e0e0e0; border-bottom-color: #2e2e2e; }
+body.dark-mode .sidemenu-menu ul li a:hover { color: #fbb200; }
+body.dark-mode .sidemenu-close        { color: #e0e0e0; }
+
+/* Banner */
+body.dark-mode .home-banner           { background-color: #1a1a1a; }
+body.dark-mode .home-banner-title     { color: #ffffff; }
+body.dark-mode .home-banner-title span { color: #fbb200; }
+body.dark-mode .home-banner-desc      { color: #aaaaaa; }
+
+/* Daily Fresh */
+body.dark-mode .daily-fresh           { background-color: #1e1e1e; }
+body.dark-mode .daily-fresh-inner     { background: #2a2a2a; border: 1px solid #333333; }
+body.dark-mode .daily-fresh-inner .title { color: #ffffff; }
+body.dark-mode .daily-fresh-inner .fresh-des { color: #aaaaaa; }
+
+/* Section heading */
+body.dark-mode .section-heading .sub-title       { color: #fbb200; }
+body.dark-mode .section-heading .sub-title:before { background: #fbb200; }
+
+/* Our Menu */
+body.dark-mode .our-menu              { background-color: #121212; }
+body.dark-mode .menu-item-box         { background: #1e1e1e; border: 1px solid #2e2e2e; }
+body.dark-mode .menu-item-box:hover   { border-color: #fbb200; }
+body.dark-mode .menu-item-title > * a { color: #ffffff; }
+body.dark-mode .menu-item-title > * a:hover { color: #fbb200; }
+body.dark-mode .menu-item-price       { color: #fbb200; }
+body.dark-mode .menu-item-des p       { color: #888888; }
+body.dark-mode .item-rating ul li     { color: #fbb200; }
+
+/* Owl Carousel */
+body.dark-mode .owl-nav button        { background: #2a2a2a !important; border: 1px solid #444 !important; color: #e0e0e0 !important; }
+body.dark-mode .owl-nav button:hover  { background: #fbb200 !important; border-color: #fbb200 !important; }
+body.dark-mode .owl-dots .owl-dot span { background: #444444 !important; }
+body.dark-mode .owl-dots .owl-dot.active span { background: #fbb200 !important; }
+
+/* Our Story */
+body.dark-mode .our-story             { background-color: #1a1a1a; }
+body.dark-mode .our-story-desc        { color: #aaaaaa; }
+
+/* Our Strength */
+body.dark-mode .our-strength,
+body.dark-mode .bg-yellow             { background-color: #1e1e1e !important; }
+body.dark-mode .strength-box          { background: #2a2a2a; border: 1px solid #333333; border-radius: 16px; padding: 20px; }
+body.dark-mode .strength-title *      { color: #ffffff; }
+
+/* Testimonials */
+body.dark-mode .feeddback-part        { background-color: #121212; }
+body.dark-mode .testimonial-box       { background: #1e1e1e; border: 1px solid #2e2e2e; }
+body.dark-mode .testimonial-box:hover { border-color: #fbb200; }
+body.dark-mode .client-name           { color: #ffffff; }
+body.dark-mode .client-desc p         { color: #888888; }
+body.dark-mode .testimonial-rating ul li { color: #fbb200; }
+
+/* Reservation */
+body.dark-mode .reservation-part      { background-color: #1a1a1a; }
+body.dark-mode .reservation-form input,
+body.dark-mode .reservation-form select,
+body.dark-mode .reservation-form textarea { background: #2a2a2a; border: 1px solid #3a3a3a; color: #e0e0e0; }
+body.dark-mode .reservation-form input::placeholder,
+body.dark-mode .reservation-form textarea::placeholder { color: #666666; }
+body.dark-mode .reservation-form input:focus,
+body.dark-mode .reservation-form select:focus,
+body.dark-mode .reservation-form textarea:focus { border-color: #fbb200; background: #2e2e2e; outline: none; }
+body.dark-mode .reservation-form select option { background: #2a2a2a; color: #e0e0e0; }
+
+/* Blog */
+body.dark-mode .our-blog              { background-color: #121212; }
+body.dark-mode .blog-box              { background: #1e1e1e; border: 1px solid #2e2e2e; border-radius: 16px; }
+body.dark-mode .blog-box:hover        { border-color: #fbb200; }
+body.dark-mode .blog-title *          { color: #ffffff; }
+body.dark-mode .blog-title *:hover    { color: #fbb200; }
+body.dark-mode .blog-desc,
+body.dark-mode .blog-date,
+body.dark-mode .blog-category         { color: #777777; }
+
+/* Footer */
+body.dark-mode footer,
+body.dark-mode .footer,
+body.dark-mode .footer.bg-yellow      { background-color: #151515 !important; border-top: 1px solid #2a2a2a; }
+body.dark-mode .footer-title          { color: #ffffff; }
+body.dark-mode .footer-menu li a      { color: #888888; }
+body.dark-mode .footer-menu li a:hover { color: #fbb200; }
+
+/* Copyright */
+body.dark-mode .copyright             { background-color: #0e0e0e; color: #666666; border-top: 1px solid #222222; }
+body.dark-mode .copyright a           { color: #fbb200; }
+body.dark-mode .copyright a:hover     { color: #f22e3e; }
+
+/* Buttons */
+body.dark-mode .btn-ct                { background: #fbb200; border-color: #fbb200; color: #111111; }
+body.dark-mode .btn-ct:hover          { background: #f22e3e; border-color: #f22e3e; color: #ffffff; }
+
+/* Cart Drawer */
+body.dark-mode .cart-drawer,
+body.dark-mode .sidemenu              { background: #1e1e1e; }
+body.dark-mode .cart-drawer .bg-overlay,
+body.dark-mode .shop-sidebar .bg-overlay { background: rgba(0,0,0,0.75); }
+body.dark-mode .cart-product-name a   { color: #e0e0e0; }
+body.dark-mode .cart-product-price    { color: #fbb200; }
+body.dark-mode .cart-product-qty input { background: #2a2a2a; border-color: #3a3a3a; color: #e0e0e0; }
+
+/* Scrollbar */
+body.dark-mode ::-webkit-scrollbar       { width: 6px; }
+body.dark-mode ::-webkit-scrollbar-track { background: #1a1a1a; }
+body.dark-mode ::-webkit-scrollbar-thumb { background: #3a3a3a; border-radius: 3px; }
+body.dark-mode ::-webkit-scrollbar-thumb:hover { background: #fbb200; }
+
+/* Selection */
+body.dark-mode ::selection { background: #fbb200; color: #111111; }
