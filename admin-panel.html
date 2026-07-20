@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pizzon — Admin Dashboard</title>
+    <title>GK PIZZERIA — Admin Dashboard</title>
     <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -502,9 +502,197 @@ textarea { resize: vertical; min-height: 72px; }
 /* toggle visibility */
 .page { display: none; }
 .page.active { display: block; }
+
+/* ════════════════════════════
+   LOGIN OVERLAY
+════════════════════════════ */
+#login-overlay {
+  position: fixed;
+  inset: 0;
+  background: #111;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+}
+.login-box {
+  background: #1e1e1e;
+  border: 1px solid #2e2e2e;
+  border-radius: 16px;
+  padding: 40px 36px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.5);
+}
+.login-logo {
+  text-align: center;
+  margin-bottom: 28px;
+}
+.login-logo .brand {
+  font-size: 28px;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.5px;
+}
+.login-logo .brand span { color: #FFC107; }
+.login-logo .sub {
+  font-size: 12px;
+  color: #888;
+  margin-top: 4px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.login-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 6px;
+  text-align: center;
+}
+.login-subtitle {
+  font-size: 13px;
+  color: #888;
+  text-align: center;
+  margin-bottom: 28px;
+}
+.login-field {
+  margin-bottom: 16px;
+}
+.login-field label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: #aaa;
+  margin-bottom: 6px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.login-field .input-wrap {
+  position: relative;
+}
+.login-field .input-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 15px;
+  pointer-events: none;
+}
+.login-field input {
+  width: 100%;
+  background: #2a2a2a;
+  border: 1.5px solid #333;
+  border-radius: 10px;
+  padding: 12px 14px 12px 40px;
+  font-size: 14px;
+  color: #e0e0e0;
+  outline: none;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+  font-family: inherit;
+}
+.login-field input:focus { border-color: #FFC107; background: #2e2e2e; }
+.login-field input::placeholder { color: #555; }
+.login-eye {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+  color: #666;
+  padding: 0;
+  line-height: 1;
+}
+.login-eye:hover { color: #aaa; }
+.login-error {
+  background: #3a1a1a;
+  border: 1px solid #6a2828;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 13px;
+  color: #ff7070;
+  margin-bottom: 16px;
+  display: none;
+  text-align: center;
+}
+.login-error.show { display: block; }
+.login-btn {
+  width: 100%;
+  background: #FFC107;
+  border: none;
+  border-radius: 10px;
+  padding: 13px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #111;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+  margin-top: 4px;
+  font-family: inherit;
+}
+.login-btn:hover   { background: #e6a800; }
+.login-btn:active  { transform: scale(0.98); }
+.login-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+.login-footer {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 12px;
+  color: #555;
+}
+.login-shake {
+  animation: loginShake 0.4s ease;
+}
+@keyframes loginShake {
+  0%,100% { transform: translateX(0); }
+  20%      { transform: translateX(-8px); }
+  40%      { transform: translateX(8px); }
+  60%      { transform: translateX(-6px); }
+  80%      { transform: translateX(6px); }
+}
+
 </style>
   </head>
   <body>
+
+  <!-- ═══ Login Overlay ═══ -->
+  <div id="login-overlay">
+    <div class="login-box" id="login-box">
+      <div class="login-logo">
+        <div class="brand">GK <span>PIZZERIA</span></div>
+        <div class="sub">Admin Dashboard</div>
+      </div>
+      <div class="login-title">Welcome Back 👋</div>
+      <div class="login-subtitle">Sign in to access the admin panel</div>
+
+      <div class="login-error" id="loginError">❌ Incorrect email or password</div>
+
+      <div class="login-field">
+        <label>Email Address</label>
+        <div class="input-wrap">
+          <span class="login-icon input-icon">✉️</span>
+          <input type="email" id="loginEmail" placeholder="admin@example.com" autocomplete="email">
+        </div>
+      </div>
+
+      <div class="login-field">
+        <label>Password</label>
+        <div class="input-wrap">
+          <span class="login-icon input-icon">🔒</span>
+          <input type="password" id="loginPass" placeholder="Enter password" autocomplete="current-password">
+          <button class="login-eye" id="togglePass" tabindex="-1">👁</button>
+        </div>
+      </div>
+
+      <button class="login-btn" id="loginBtn">Sign In →</button>
+
+      <div class="login-footer">GK PIZZERIA © 2025 — Admin Access Only</div>
+    </div>
+  </div>
+
 
     <!-- Sidebar -->
     <aside class="sidebar">
@@ -1917,6 +2105,84 @@ function delTeamMember(id){
   renderTeamGrid();
   showToast('✓ Member deleted');
 }
+
+
+/* ════════════════════════════
+   LOGIN LOGIC
+════════════════════════════ */
+(function () {
+  var CORRECT_EMAIL = 'harthikgokul@gmail.com';
+  var CORRECT_PASS  = '123456Ga@';
+  var SESSION_KEY   = 'pizzon_admin_auth';
+
+  var overlay   = document.getElementById('login-overlay');
+  var loginBtn  = document.getElementById('loginBtn');
+  var emailInp  = document.getElementById('loginEmail');
+  var passInp   = document.getElementById('loginPass');
+  var errorBox  = document.getElementById('loginError');
+  var toggleBtn = document.getElementById('togglePass');
+  var loginBox  = document.getElementById('login-box');
+
+  /* if already logged in, hide overlay immediately */
+  if (sessionStorage.getItem(SESSION_KEY) === '1') {
+    overlay.style.display = 'none';
+  }
+
+  /* show/hide password toggle */
+  toggleBtn.addEventListener('click', function () {
+    var isPass = passInp.type === 'password';
+    passInp.type = isPass ? 'text' : 'password';
+    toggleBtn.textContent = isPass ? '🙈' : '👁';
+  });
+
+  /* allow Enter key to submit */
+  [emailInp, passInp].forEach(function (el) {
+    el.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') doLogin();
+    });
+  });
+
+  loginBtn.addEventListener('click', doLogin);
+
+  function doLogin() {
+    var email = emailInp.value.trim();
+    var pass  = passInp.value;
+
+    if (!email || !pass) {
+      showError('Please enter both email and password.');
+      shake();
+      return;
+    }
+
+    if (email === CORRECT_EMAIL && pass === CORRECT_PASS) {
+      /* success */
+      errorBox.classList.remove('show');
+      loginBtn.textContent = '✅ Signing in...';
+      loginBtn.disabled = true;
+      setTimeout(function () {
+        sessionStorage.setItem(SESSION_KEY, '1');
+        overlay.style.opacity = '0';
+        overlay.style.transition = 'opacity 0.4s ease';
+        setTimeout(function () { overlay.style.display = 'none'; }, 400);
+      }, 600);
+    } else {
+      showError('❌ Incorrect email or password. Please try again.');
+      passInp.value = '';
+      shake();
+    }
+  }
+
+  function showError(msg) {
+    errorBox.textContent = msg;
+    errorBox.classList.add('show');
+  }
+
+  function shake() {
+    loginBox.classList.remove('login-shake');
+    void loginBox.offsetWidth; /* reflow to restart animation */
+    loginBox.classList.add('login-shake');
+  }
+})();
 
 </script>
   </body>
