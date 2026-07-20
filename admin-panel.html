@@ -374,6 +374,130 @@ textarea { resize: vertical; min-height: 72px; }
 .cancel-edit-btn:hover { background:#fff0b0; }
 
 .empty-tbl { text-align: center; padding: 40px; color: var(--gray); font-size: 14px; }
+/* ── Team Card Grid ── */
+.team-card-img   { width:100%; height:200px; object-fit:cover; object-position:center top; display:block; background:var(--light); }
+.team-card-emoji { width:100%; height:200px; display:flex; align-items:center; justify-content:center; font-size:64px; background:var(--light); }
+.team-card-role  { font-size:12px; color:var(--gray); margin-bottom:6px; }
+.team-social-row { display:flex; gap:6px; margin-bottom:10px; flex-wrap:wrap; }
+.team-social-row a { font-size:11px; color:var(--gray); text-decoration:none; border:1px solid var(--border); border-radius:6px; padding:3px 8px; transition:all .15s; }
+.team-social-row a:hover { color:var(--yellow); border-color:var(--yellow); }
+
+/* ── Shared Card Grid Layout ── */
+.card-grid-layout { display:flex; gap:24px; align-items:flex-start; }
+.card-grid-wrap   { flex:1; min-width:0; }
+.card-side-panel  { width:360px; flex-shrink:0; position:sticky; top:70px; display:none; }
+.card-side-panel.open { display:block; }
+.item-card-grid {
+  display:grid; grid-template-columns:repeat(3,1fr); gap:16px; padding:20px;
+}
+@media(max-width:1400px){ .item-card-grid{ grid-template-columns:repeat(2,1fr); } }
+@media(max-width:900px){
+  .card-grid-layout{ flex-direction:column; }
+  .card-side-panel{ width:100%; position:static; }
+  .item-card-grid{ grid-template-columns:repeat(2,1fr); }
+}
+@media(max-width:560px){ .item-card-grid{ grid-template-columns:1fr; } }
+.item-card {
+  background:var(--white); border:1.5px solid var(--border);
+  border-radius:var(--radius); overflow:hidden;
+  transition:transform .18s, box-shadow .18s, border-color .18s;
+}
+.item-card:hover { transform:translateY(-3px); box-shadow:0 6px 24px rgba(0,0,0,.09); border-color:#d0c8be; }
+.item-card.selected { border-color:var(--yellow); box-shadow:0 0 0 3px rgba(255,193,7,.18); }
+.item-card-body    { padding:12px 14px; }
+.item-card-head    { display:flex; justify-content:space-between; align-items:flex-start; gap:6px; margin-bottom:4px; }
+.item-card-name    { font-size:13.5px; font-weight:700; color:var(--dark); }
+.item-card-actions { display:flex; gap:6px; margin-top:10px; }
+.item-card-actions .edit-btn,
+.item-card-actions .del-btn  { flex:1; text-align:center; }
+
+/* side panel */
+.side-panel-card { background:var(--white); border:1.5px solid var(--border); border-radius:var(--radius); overflow:hidden; }
+.side-panel-head { padding:14px 18px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; background:#faf9f7; }
+.side-panel-head h3 { font-size:14px; font-weight:700; }
+.side-panel-close { background:none; border:none; font-size:18px; cursor:pointer; color:var(--gray); line-height:1; padding:2px 6px; border-radius:4px; }
+.side-panel-close:hover { background:var(--light); color:var(--dark); }
+.side-panel-body { padding:16px 18px; max-height:calc(100vh - 160px); overflow-y:auto; }
+.side-panel-body .form-grid   { gap:12px; }
+.side-panel-body label        { font-size:12px; }
+.side-panel-body input[type=text],
+.side-panel-body input[type=number],
+.side-panel-body input[type=url],
+.side-panel-body select,
+.side-panel-body textarea     { padding:7px 10px; font-size:13px; }
+.side-panel-body textarea     { min-height:56px; }
+.side-panel-body .img-upload-zone { padding:14px; }
+.side-panel-body .upload-icon { font-size:20px; }
+.side-panel-body .upload-text { font-size:12px; }
+.side-panel-body .upload-sub  { font-size:11px; }
+.side-panel-body .img-preview { max-height:120px; }
+.side-panel-body .submit-btn  { padding:9px 20px; font-size:13px; margin-top:4px; width:100%; justify-content:center; }
+
+/* ── Card Grid Layout (Manage + Shop List) ── */
+.card-grid-layout { display:flex; gap:24px; align-items:flex-start; }
+.card-grid-wrap   { flex:1; min-width:0; }
+.card-side-panel  { width:360px; flex-shrink:0; position:sticky; top:70px; display:none; }
+.card-side-panel.open { display:block; }
+
+.item-card-grid {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:16px;
+  padding:20px;
+}
+@media(max-width:1400px){ .item-card-grid{ grid-template-columns:repeat(2,1fr); } }
+@media(max-width:900px){
+  .card-grid-layout{ flex-direction:column; }
+  .card-side-panel { width:100%; position:static; }
+  .item-card-grid  { grid-template-columns:repeat(2,1fr); }
+}
+@media(max-width:560px){ .item-card-grid{ grid-template-columns:1fr; } }
+
+.item-card {
+  background:var(--white);
+  border:1.5px solid var(--border);
+  border-radius:var(--radius);
+  overflow:hidden;
+  transition:transform .18s, box-shadow .18s, border-color .18s;
+}
+.item-card:hover { transform:translateY(-3px); box-shadow:0 6px 24px rgba(0,0,0,.09); border-color:#d0c8be; }
+.item-card.selected { border-color:var(--yellow); box-shadow:0 0 0 3px rgba(255,193,7,.18); }
+.item-card-img   { width:100%; height:160px; object-fit:cover; display:block; background:var(--light); }
+.item-card-emoji { width:100%; height:160px; display:flex; align-items:center; justify-content:center; font-size:48px; background:var(--light); }
+.item-card-body  { padding:12px 14px; }
+.item-card-head  { display:flex; justify-content:space-between; align-items:flex-start; gap:6px; margin-bottom:4px; }
+.item-card-name  { font-size:13.5px; font-weight:700; color:var(--dark); }
+.item-card-price { font-size:13.5px; font-weight:800; color:var(--red); white-space:nowrap; }
+.item-card-stars { color:var(--yellow); font-size:11px; letter-spacing:-1px; margin-bottom:6px; }
+.item-card-cat   { display:inline-block; padding:2px 9px; border-radius:50px; font-size:10px; font-weight:600; background:#f0ede8; color:var(--gray); text-transform:capitalize; margin-bottom:8px; }
+.item-card-desc  { font-size:11.5px; color:var(--gray); line-height:1.5; margin-bottom:10px; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+.item-card-actions { display:flex; gap:6px; }
+.item-card-actions .edit-btn,
+.item-card-actions .del-btn  { flex:1; text-align:center; }
+
+/* Side panel */
+.side-panel-card { background:var(--white); border:1.5px solid var(--border); border-radius:var(--radius); overflow:hidden; }
+.side-panel-head { padding:14px 18px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; background:#faf9f7; }
+.side-panel-head h3 { font-size:14px; font-weight:700; }
+.side-panel-close { background:none; border:none; font-size:18px; cursor:pointer; color:var(--gray); line-height:1; padding:2px 6px; border-radius:4px; }
+.side-panel-close:hover { background:var(--light); color:var(--dark); }
+.side-panel-body { padding:16px 18px; max-height:calc(100vh - 160px); overflow-y:auto; }
+.side-panel-body .form-grid   { gap:12px; }
+.side-panel-body label        { font-size:12px; }
+.side-panel-body input[type=text],
+.side-panel-body input[type=number],
+.side-panel-body select,
+.side-panel-body textarea     { padding:7px 10px; font-size:13px; }
+.side-panel-body textarea     { min-height:56px; }
+.side-panel-body .img-upload-zone { padding:16px; }
+.side-panel-body .upload-icon { font-size:22px; }
+.side-panel-body .upload-text { font-size:12px; }
+.side-panel-body .upload-sub  { font-size:11px; }
+.side-panel-body .img-preview { max-height:120px; }
+.side-panel-body .stars-select .star-opt { font-size:18px; }
+.side-panel-body .badge-opt   { padding:4px 10px; font-size:11px; }
+.side-panel-body .submit-btn  { padding:9px 20px; font-size:13px; margin-top:4px; width:100%; justify-content:center; }
+
 
 /* toggle visibility */
 .page { display: none; }
@@ -385,7 +509,7 @@ textarea { resize: vertical; min-height: 72px; }
     <!-- Sidebar -->
     <aside class="sidebar">
       <div class="sidebar-logo">
-        <div class="brand">Pizz<span>on</span></div>
+        <div class="brand">GK <span>PIZZERIA</span></div>
         <div class="sub">Admin Dashboard</div>
       </div>
       <nav class="sidebar-nav">
@@ -402,14 +526,25 @@ textarea { resize: vertical; min-height: 72px; }
         <button class="nav-item" data-page="testimonials">
           <span class="icon">⭐</span> Testimonials
         </button>
+        <button class="nav-item" data-page="shop-list">
+          <span class="icon">🛒</span> Shop List
+        </button>
+        <button class="nav-item" data-page="our-team">
+          <span class="icon">👥</span> Our Team
+        </button>
         <div class="nav-label" style="margin-top:12px">Settings</div>
         <button class="nav-item" data-page="dashboard">
           <span class="icon">⚙️</span> Settings
         </button>
       </nav>
       <div class="sidebar-footer">
-        <a class="view-site-btn" href="our-menu.html" target="_blank">
+        <a class="view-site-btn" href="our-menu.html" target="_blank"
+          style="margin-bottom:8px">
           🔗 View Our Menu
+        </a>
+        <a class="view-site-btn" href="shop-list.html" target="_blank"
+          style="margin-top:6px">
+          🛒 View Shop List
         </a>
       </div>
     </aside>
@@ -568,103 +703,441 @@ textarea { resize: vertical; min-height: 72px; }
 
         <!-- Manage Page -->
         <div class="page" id="page-manage">
-          <div class="section-card">
-            <div class="section-head">
-              <div>
-                <h2>Manage Menu Items</h2>
-                <p>All items currently on the menu</p>
+          <div class="card-grid-layout">
+            <!-- Left: Card Grid -->
+            <div class="card-grid-wrap">
+              <div class="section-card">
+                <div class="section-head">
+                  <div>
+                    <h2>Manage Menu Items</h2>
+                    <p id="manage-count">All items currently on the menu</p>
+                  </div>
+                  <div
+                    style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+                    <select id="manageCatFilter"
+                      style="border:1.5px solid var(--border);border-radius:8px;padding:7px 12px;font-size:13px;background:var(--white);cursor:pointer;">
+                      <option value="all">All</option>
+                      <option value="slides">Slides</option>
+                      <option value="pizzas">Pizzas</option>
+                      <option value="offers">Offers</option>
+                      <option value="pasta">Pasta</option>
+                    </select>
+                    <button class="submit-btn"
+                      style="margin-top:0;padding:8px 16px;font-size:13px"
+                      onclick="showPage('add-item')">+ Add Item</button>
+                  </div>
+                </div>
+                <div class="item-card-grid" id="manageCardGrid"></div>
               </div>
-              <button class="submit-btn"
-                style="margin-top:0;padding:8px 16px;font-size:13px"
-                onclick="showPage('add-item')">+ Add Item</button>
             </div>
-            <div style="padding:0">
-              <table class="menu-table">
-                <thead>
-                  <tr>
-                    <th>Image</th><th>Name</th><th>Category</th><th>Price</th><th>Stars</th><th>Badge</th><th>Action</th>
-                  </tr>
-                </thead>
-                <tbody id="manageTableBody"></tbody>
-              </table>
-            </div>
-          </div>
-        </div>
 
-      </div>
-    </div>
-
-    <!-- Testimonials Page -->
-    <div class="page" id="page-testimonials">
-
-      <!-- Add / Edit Testimonial Form -->
-      <div class="section-card" style="margin-bottom:24px">
-        <div class="section-head">
-          <div>
-            <h2 id="testiFormTitle">Add Testimonial</h2>
-            <p id="testiFormSubtitle">Upload client photo, name, review —
-              appears on our-menu.html</p>
-          </div>
-        </div>
-        <div class="section-body">
-          <div class="edit-bar" id="testiEditBar">
-            ✏️ Editing: <span id="testiEditingName">—</span>
-            <button class="cancel-edit-btn" onclick="cancelTestiEdit()">✕
-              Cancel</button>
-          </div>
-          <div class="form-grid">
-            <div class="form-group full">
-              <label>Client Photo</label>
-              <div class="img-upload-zone" id="testiUploadZone">
-                <input type="file" id="testiImgInput" accept="image/*">
-                <img class="img-preview" id="testiImgPreview" alt="preview">
-                <div id="testiUploadPlaceholder">
-                  <div class="upload-icon">👤</div>
-                  <div class="upload-text">Click or drag & drop client
-                    photo</div>
-                  <div class="upload-sub">PNG, JPG, WEBP — max 5MB</div>
+            <!-- Right: Edit Side Panel -->
+            <div class="card-side-panel" id="manageSidePanel">
+              <div class="side-panel-card">
+                <div class="side-panel-head">
+                  <h3>✏️ Edit Item</h3>
+                  <button class="side-panel-close"
+                    onclick="closeSidePanel('manage')">✕</button>
+                </div>
+                <div class="side-panel-body">
+                  <div class="form-group" style="margin-bottom:12px">
+                    <label>Image</label>
+                    <div class="img-upload-zone" id="spUploadZone">
+                      <input type="file" id="spImgInput" accept="image/*">
+                      <img class="img-preview" id="spImgPreview" alt="preview">
+                      <div id="spUploadPlaceholder">
+                        <div class="upload-icon">📷</div>
+                        <div class="upload-text">Click or drag image</div>
+                        <div class="upload-sub">PNG, JPG, WEBP — max 5MB</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-grid">
+                    <div class="form-group"><label>Name</label><input
+                        type="text" id="spName" placeholder="Item name"></div>
+                    <div class="form-group"><label>Price ($)</label><input
+                        type="number" id="spPrice" placeholder="45"
+                        min="1"></div>
+                    <div class="form-group">
+                      <label>Category</label>
+                      <select id="spCat">
+                        <option value="all">All</option>
+                        <option value="slides">Slides</option>
+                        <option value="pizzas">Pizzas</option>
+                        <option value="offers">Offers</option>
+                        <option value="pasta">Pasta</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label>Rating</label>
+                      <div class="stars-select" id="spStarsSelect">
+                        <span class="star-opt on" data-spval="1">★</span>
+                        <span class="star-opt on" data-spval="2">★</span>
+                        <span class="star-opt on" data-spval="3">★</span>
+                        <span class="star-opt on" data-spval="4">★</span>
+                        <span class="star-opt on" data-spval="5">★</span>
+                      </div>
+                    </div>
+                    <div
+                      class="form-group full"><label>Description</label><textarea
+                        id="spDesc"
+                        placeholder="Description..."></textarea></div>
+                    <div class="form-group full">
+                      <label>Badge</label>
+                      <div class="badge-opts" id="spBadgeOpts">
+                        <button class="badge-opt sel-none active"
+                          data-spbadge>None</button>
+                        <button class="badge-opt sel-new"
+                          data-spbadge="new">New</button>
+                        <button class="badge-opt sel-hot"
+                          data-spbadge="hot">Hot</button>
+                        <button class="badge-opt sel-offer"
+                          data-spbadge="offer">Offer</button>
+                      </div>
+                    </div>
+                  </div>
+                  <button class="submit-btn" id="spSaveBtn">💾 Save
+                    Changes</button>
                 </div>
               </div>
             </div>
-            <div class="form-group">
-              <label>Client Name</label>
-              <input type="text" id="testiName" placeholder="e.g. Johan Doe">
-            </div>
-            <div class="form-group">
-              <label>Rating</label>
-              <div class="stars-select" id="testiStarsSelect">
-                <span class="star-opt on" data-tval="1">★</span>
-                <span class="star-opt on" data-tval="2">★</span>
-                <span class="star-opt on" data-tval="3">★</span>
-                <span class="star-opt on" data-tval="4">★</span>
-                <span class="star-opt on" data-tval="5">★</span>
+          </div>
+        </div>
+
+        <!-- Testimonials Page -->
+        <div class="page" id="page-testimonials">
+
+          <!-- Add / Edit Testimonial Form -->
+          <div class="section-card" style="margin-bottom:24px">
+            <div class="section-head">
+              <div>
+                <h2 id="testiFormTitle">Add Testimonial</h2>
+                <p id="testiFormSubtitle">Upload client photo, name, review —
+                  appears on our-menu.html</p>
               </div>
             </div>
-            <div class="form-group full">
-              <label>Review</label>
-              <textarea id="testiReview"
-                placeholder="Client review text..."></textarea>
+            <div class="section-body">
+              <div class="edit-bar" id="testiEditBar">
+                ✏️ Editing: <span id="testiEditingName">—</span>
+                <button class="cancel-edit-btn" onclick="cancelTestiEdit()">✕
+                  Cancel</button>
+              </div>
+              <div class="form-grid">
+                <div class="form-group full">
+                  <label>Client Photo</label>
+                  <div class="img-upload-zone" id="testiUploadZone">
+                    <input type="file" id="testiImgInput" accept="image/*">
+                    <img class="img-preview" id="testiImgPreview" alt="preview">
+                    <div id="testiUploadPlaceholder">
+                      <div class="upload-icon">👤</div>
+                      <div class="upload-text">Click or drag & drop client
+                        photo</div>
+                      <div class="upload-sub">PNG, JPG, WEBP — max 5MB</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>Client Name</label>
+                  <input type="text" id="testiName"
+                    placeholder="e.g. Johan Doe">
+                </div>
+                <div class="form-group">
+                  <label>Rating</label>
+                  <div class="stars-select" id="testiStarsSelect">
+                    <span class="star-opt on" data-tval="1">★</span>
+                    <span class="star-opt on" data-tval="2">★</span>
+                    <span class="star-opt on" data-tval="3">★</span>
+                    <span class="star-opt on" data-tval="4">★</span>
+                    <span class="star-opt on" data-tval="5">★</span>
+                  </div>
+                </div>
+                <div class="form-group full">
+                  <label>Review</label>
+                  <textarea id="testiReview"
+                    placeholder="Client review text..."></textarea>
+                </div>
+              </div>
+              <button class="submit-btn" id="addTestiBtn">⭐ Add
+                Testimonial</button>
+              <button class="cancel-edit-btn" id="cancelTestiBtn"
+                style="display:none;margin-left:10px;padding:10px 18px;font-size:13px;"
+                onclick="cancelTestiEdit()">✕ Cancel Edit</button>
             </div>
           </div>
-          <button class="submit-btn" id="addTestiBtn">⭐ Add Testimonial</button>
-          <button class="cancel-edit-btn" id="cancelTestiBtn"
-            style="display:none;margin-left:10px;padding:10px 18px;font-size:13px;"
-            onclick="cancelTestiEdit()">✕ Cancel Edit</button>
-        </div>
-      </div>
 
-      <!-- Manage Testimonials -->
-      <div class="section-card">
-        <div class="section-head">
-          <div><h2>All Testimonials</h2><p>Manage client reviews shown on
-              our-menu.html</p></div>
-        </div>
-        <div class="section-body" style="padding:16px 22px">
-          <div class="testi-grid" id="testiGrid">
-            <div class="empty-tbl" style="grid-column:1/-1">No testimonials yet.
-              Add one above.</div>
+          <!-- Manage Testimonials -->
+          <div class="section-card">
+            <div class="section-head">
+              <div><h2>All Testimonials</h2><p>Manage client reviews shown on
+                  our-menu.html</p></div>
+            </div>
+            <div class="section-body" style="padding:16px 22px">
+              <div class="testi-grid" id="testiGrid">
+                <div class="empty-tbl" style="grid-column:1/-1">No testimonials
+                  yet.
+                  Add one above.</div>
+              </div>
+            </div>
           </div>
         </div>
+
+        <!-- Shop List Page -->
+        <div class="page" id="page-shop-list">
+          <div class="card-grid-layout">
+
+            <!-- Left: Card Grid -->
+            <div class="card-grid-wrap">
+              <div class="section-card">
+                <div class="section-head">
+                  <div>
+                    <h2>Shop List Products</h2>
+                    <p id="shop-count">Items appear live on shop-list.html</p>
+                  </div>
+                  <div
+                    style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+                    <select id="shopCatFilter"
+                      style="border:1.5px solid var(--border);border-radius:8px;padding:7px 12px;font-size:13px;background:var(--white);cursor:pointer;">
+                      <option value="all">All</option>
+                      <option value="slides">Slides</option>
+                      <option value="pizzas">Pizzas</option>
+                      <option value="offers">Offers</option>
+                      <option value="pasta">Pasta</option>
+                    </select>
+                    <button class="submit-btn"
+                      style="margin-top:0;padding:8px 16px;font-size:13px"
+                      onclick="showPage('add-item')">+ Add Product</button>
+                  </div>
+                </div>
+                <div class="item-card-grid" id="shopCardGrid"></div>
+              </div>
+            </div>
+
+            <!-- Right: Edit Side Panel -->
+            <div class="card-side-panel" id="shopSidePanel">
+              <div class="side-panel-card">
+                <div class="side-panel-head">
+                  <h3>✏️ Edit Product</h3>
+                  <button class="side-panel-close"
+                    onclick="closeSidePanel('shop')">✕</button>
+                </div>
+                <div class="side-panel-body">
+                  <div class="form-group" style="margin-bottom:12px">
+                    <label>Image</label>
+                    <div class="img-upload-zone" id="shopSpUploadZone">
+                      <input type="file" id="shopSpImgInput" accept="image/*">
+                      <img class="img-preview" id="shopSpImgPreview"
+                        alt="preview">
+                      <div id="shopSpUploadPlaceholder">
+                        <div class="upload-icon">📷</div>
+                        <div class="upload-text">Click or drag image</div>
+                        <div class="upload-sub">PNG, JPG, WEBP — max 5MB</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-grid">
+                    <div class="form-group"><label>Name</label><input
+                        type="text" id="shopSpName"
+                        placeholder="Product name"></div>
+                    <div class="form-group"><label>Price ($)</label><input
+                        type="number" id="shopSpPrice" placeholder="45"
+                        min="1"></div>
+                    <div class="form-group">
+                      <label>Category</label>
+                      <select id="shopSpCat">
+                        <option value="all">All</option>
+                        <option value="slides">Slides</option>
+                        <option value="pizzas">Pizzas</option>
+                        <option value="offers">Offers</option>
+                        <option value="pasta">Pasta</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label>Rating</label>
+                      <div class="stars-select" id="shopSpStarsSelect">
+                        <span class="star-opt on" data-shopval="1">★</span>
+                        <span class="star-opt on" data-shopval="2">★</span>
+                        <span class="star-opt on" data-shopval="3">★</span>
+                        <span class="star-opt on" data-shopval="4">★</span>
+                        <span class="star-opt on" data-shopval="5">★</span>
+                      </div>
+                    </div>
+                    <div
+                      class="form-group full"><label>Description</label><textarea
+                        id="shopSpDesc"
+                        placeholder="Description..."></textarea></div>
+                    <div class="form-group full">
+                      <label>Badge</label>
+                      <div class="badge-opts" id="shopSpBadgeOpts">
+                        <button class="badge-opt sel-none active"
+                          data-shopbadge>None</button>
+                        <button class="badge-opt sel-new"
+                          data-shopbadge="new">New</button>
+                        <button class="badge-opt sel-hot"
+                          data-shopbadge="hot">Hot</button>
+                        <button class="badge-opt sel-offer"
+                          data-shopbadge="offer">Offer</button>
+                      </div>
+                    </div>
+                  </div>
+                  <button class="submit-btn" id="shopSpSaveBtn">💾 Save
+                    Changes</button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Our Team Page -->
+        <div class="page" id="page-our-team">
+          <div class="card-grid-layout">
+
+            <!-- Left: Add form + Card Grid -->
+            <div class="card-grid-wrap">
+
+              <!-- Add / Edit Form -->
+              <div class="section-card" style="margin-bottom:20px">
+                <div class="section-head">
+                  <div>
+                    <h2 id="teamFormTitle">Add Team Member</h2>
+                    <p>Upload photo, name, role, social links → appears on
+                      our-team.html</p>
+                  </div>
+                </div>
+                <div class="section-body">
+                  <div class="edit-bar" id="teamEditBar">
+                    ✏️ Editing: <span id="teamEditingName">—</span>
+                    <button class="cancel-edit-btn" onclick="cancelTeamEdit()">✕
+                      Cancel</button>
+                  </div>
+                  <div class="form-grid">
+                    <div class="form-group full">
+                      <label>Photo</label>
+                      <div class="img-upload-zone" id="teamImgZone">
+                        <input type="file" id="teamImgInput" accept="image/*">
+                        <img class="img-preview" id="teamImgPreview"
+                          alt="preview">
+                        <div id="teamImgPlaceholder">
+                          <div class="upload-icon">👤</div>
+                          <div class="upload-text">Click or drag team member
+                            photo</div>
+                          <div class="upload-sub">PNG, JPG, WEBP — max 5MB</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label>Full Name</label>
+                      <input type="text" id="teamName"
+                        placeholder="e.g. Angel Juliya">
+                    </div>
+                    <div class="form-group">
+                      <label>Role / Position</label>
+                      <input type="text" id="teamRole"
+                        placeholder="e.g. Senior Chef">
+                    </div>
+                    <div class="form-group">
+                      <label>🔵 Facebook URL <small
+                          style="font-weight:400;color:var(--gray)">(optional)</small></label>
+                      <input type="url" id="teamFb"
+                        placeholder="https://facebook.com/...">
+                    </div>
+                    <div class="form-group">
+                      <label>🐦 Twitter URL <small
+                          style="font-weight:400;color:var(--gray)">(optional)</small></label>
+                      <input type="url" id="teamTw"
+                        placeholder="https://twitter.com/...">
+                    </div>
+                    <div class="form-group">
+                      <label>📸 Instagram URL <small
+                          style="font-weight:400;color:var(--gray)">(optional)</small></label>
+                      <input type="url" id="teamIns"
+                        placeholder="https://instagram.com/...">
+                    </div>
+                    <div class="form-group">
+                      <label>💼 LinkedIn URL <small
+                          style="font-weight:400;color:var(--gray)">(optional)</small></label>
+                      <input type="url" id="teamLin"
+                        placeholder="https://linkedin.com/in/...">
+                    </div>
+                    <div class="form-group">
+                      <label>▶️ YouTube URL <small
+                          style="font-weight:400;color:var(--gray)">(optional)</small></label>
+                      <input type="url" id="teamYt"
+                        placeholder="https://youtube.com/...">
+                    </div>
+                  </div>
+                  <button class="submit-btn" id="addTeamBtn">👥 Add
+                    Member</button>
+                  <button class="cancel-edit-btn" id="cancelTeamBtn"
+                    style="display:none;margin-left:10px;padding:10px 18px;font-size:13px"
+                    onclick="cancelTeamEdit()">✕ Cancel</button>
+                </div>
+              </div>
+
+              <!-- Team Cards Grid -->
+              <div class="section-card">
+                <div class="section-head">
+                  <div>
+                    <h2>All Team Members</h2>
+                    <p id="team-count">Members on our-team.html</p>
+                  </div>
+                </div>
+                <div class="item-card-grid" id="teamCardGrid"></div>
+              </div>
+            </div>
+
+            <!-- Right: Edit Side Panel -->
+            <div class="card-side-panel" id="teamSidePanel">
+              <div class="side-panel-card">
+                <div class="side-panel-head">
+                  <h3>✏️ Edit Member</h3>
+                  <button class="side-panel-close"
+                    onclick="closeTeamPanel()">✕</button>
+                </div>
+                <div class="side-panel-body">
+                  <div class="form-group" style="margin-bottom:12px">
+                    <label>Photo</label>
+                    <div class="img-upload-zone" id="tspImgZone">
+                      <input type="file" id="tspImgInput" accept="image/*">
+                      <img class="img-preview" id="tspImgPreview" alt="preview">
+                      <div id="tspImgPlaceholder">
+                        <div class="upload-icon">👤</div>
+                        <div class="upload-text">Click or drag photo</div>
+                        <div class="upload-sub">PNG, JPG — max 5MB</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-grid">
+                    <div class="form-group"><label>Full Name</label><input
+                        type="text" id="tspName" placeholder="Name"></div>
+                    <div class="form-group"><label>Role</label><input
+                        type="text"
+                        id="tspRole" placeholder="Role"></div>
+                    <div class="form-group"><label>🔵 Facebook</label><input
+                        type="url" id="tspFb"
+                        placeholder="https://facebook.com/..."></div>
+                    <div class="form-group"><label>🐦 Twitter</label><input
+                        type="url" id="tspTw"
+                        placeholder="https://twitter.com/..."></div>
+                    <div class="form-group"><label>📸 Instagram</label><input
+                        type="url" id="tspIns"
+                        placeholder="https://instagram.com/..."></div>
+                    <div class="form-group"><label>💼 LinkedIn</label><input
+                        type="url" id="tspLin"
+                        placeholder="https://linkedin.com/in/..."></div>
+                    <div class="form-group"><label>▶️ YouTube</label><input
+                        type="url" id="tspYt"
+                        placeholder="https://youtube.com/..."></div>
+                  </div>
+                  <button class="submit-btn" id="tspSaveBtn">💾 Save
+                    Changes</button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
       </div>
     </div>
 
@@ -711,11 +1184,13 @@ function showPage(name) {
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
   document.getElementById('page-' + name).classList.add('active');
   document.querySelector(`[data-page="${name}"]`)?.classList.add('active');
-  const titles = { dashboard:'Dashboard', 'add-item':'Add Menu Item', manage:'Manage Menu', testimonials:'Testimonials' };
+  const titles = { dashboard:'Dashboard', 'add-item':'Add Menu Item', manage:'Manage Menu', testimonials:'Testimonials', 'shop-list':'Shop List', 'our-team':'Our Team' };
   document.getElementById('topbarTitle').textContent = titles[name] || name;
   if (name === 'dashboard')    renderDashboard();
   if (name === 'manage')       renderManage();
   if (name === 'testimonials') renderTestiGrid();
+  if (name === 'shop-list')    renderShopGrid();
+  if (name === 'our-team')    renderTeamGrid();
 }
 document.querySelectorAll('.nav-item').forEach(btn => {
   btn.addEventListener('click', () => showPage(btn.dataset.page));
@@ -761,7 +1236,206 @@ function renderTable(tbodyId, items, showActions) {
       </div>` : ''}</td>
     </tr>`).join('');
 }
-function renderManage() { renderTable('manageTableBody', loadItems(), true); }
+
+/* ════════════════════════════════════════
+   SHARED: build card HTML
+════════════════════════════════════════ */
+function buildItemCard(item, panelType) {
+  const badgeCls = { new:'tbl-badge-new', hot:'tbl-badge-hot', offer:'tbl-badge-offer' };
+  const imgHTML = item.img
+    ? `<img class="item-card-img" src="${item.img}" alt="${item.name}">`
+    : `<div class="item-card-emoji">${item.emoji || '🍽️'}</div>`;
+  const badge = item.badge
+    ? `<span class="tbl-badge ${badgeCls[item.badge]}" style="margin-bottom:6px;display:inline-block">${item.badge}</span>` : '';
+  return `
+    <div class="item-card" id="${panelType}-card-${item.id}">
+      ${imgHTML}
+      <div class="item-card-body">
+        ${badge}
+        <div class="item-card-head">
+          <div class="item-card-name">${item.name}</div>
+          <div class="item-card-price">$${item.price}</div>
+        </div>
+        <div class="item-card-stars">${'★'.repeat(item.stars)}${'☆'.repeat(5-item.stars)}</div>
+        <span class="item-card-cat">${item.cat}</span>
+        <div class="item-card-desc">${item.desc || ''}</div>
+        <div class="item-card-actions">
+          <button class="edit-btn" onclick="openSidePanel('${panelType}',${item.id})">✏️ Edit</button>
+          <button class="del-btn"  onclick="deleteItem(${item.id})">🗑 Delete</button>
+        </div>
+      </div>
+    </div>`;
+}
+
+function renderCardGrid(gridId, items, panelType, countId) {
+  const grid = document.getElementById(gridId);
+  if (!grid) return;
+  const count = document.getElementById(countId);
+  if (count) count.textContent = items.length + ' item' + (items.length !== 1 ? 's' : '');
+  if (!items.length) {
+    grid.innerHTML = `<div class="empty-tbl" style="grid-column:1/-1">No items yet. <button style="color:var(--yellow);background:none;border:none;cursor:pointer;font-weight:600" onclick="showPage('add-item')">Add one →</button></div>`;
+    return;
+  }
+  grid.innerHTML = items.map(item => buildItemCard(item, panelType)).join('');
+}
+
+/* ════════════════════════════════════════
+   MANAGE MENU
+════════════════════════════════════════ */
+function renderManage() {
+  const all = loadItems();
+  const cat = document.getElementById('manageCatFilter')?.value || 'all';
+  const filtered = cat === 'all' ? all : all.filter(i => i.cat === cat);
+  renderCardGrid('manageCardGrid', filtered, 'manage', 'manage-count');
+  const sel = document.getElementById('manageCatFilter');
+  if (sel) sel.onchange = () => renderManage();
+}
+
+/* ════════════════════════════════════════
+   SHOP LIST
+════════════════════════════════════════ */
+function renderShopGrid() {
+  const all = loadItems();
+  const cat = document.getElementById('shopCatFilter')?.value || 'all';
+  const filtered = cat === 'all' ? all : all.filter(i => i.cat === cat);
+  renderCardGrid('shopCardGrid', filtered, 'shop', 'shop-count');
+  const sel = document.getElementById('shopCatFilter');
+  if (sel) sel.onchange = () => renderShopGrid();
+}
+
+/* ════════════════════════════════════════
+   SHARED SIDE PANEL LOGIC
+════════════════════════════════════════ */
+const SP = {
+  manage: { panel:'manageSidePanel', img:'spImgInput', prev:'spImgPreview', ph:'spUploadPlaceholder', zone:'spUploadZone', name:'spName', price:'spPrice', cat:'spCat', desc:'spDesc', stars:'spStarsSelect', badge:'spBadgeOpts', save:'spSaveBtn', dval:'spval', dbadge:'spbadge' },
+  shop:   { panel:'shopSidePanel',   img:'shopSpImgInput', prev:'shopSpImgPreview', ph:'shopSpUploadPlaceholder', zone:'shopSpUploadZone', name:'shopSpName', price:'shopSpPrice', cat:'shopSpCat', desc:'shopSpDesc', stars:'shopSpStarsSelect', badge:'shopSpBadgeOpts', save:'shopSpSaveBtn', dval:'shopval', dbadge:'shopbadge' }
+};
+let spState = { type:null, editingId:null, img:'', stars:5, badge:'' };
+
+function openSidePanel(type, id) {
+  const item = loadItems().find(i => i.id === id);
+  if (!item) return;
+  const s = SP[type];
+  spState = { type, editingId:id, img: item.img||'', stars: item.stars||5, badge: item.badge||'' };
+
+  /* highlight card */
+  document.querySelectorAll('.item-card').forEach(c => c.classList.remove('selected'));
+  const card = document.getElementById(type+'-card-'+id);
+  if (card) { card.classList.add('selected'); card.scrollIntoView({behavior:'smooth',block:'nearest'}); }
+
+  /* fill fields */
+  document.getElementById(s.name).value  = item.name;
+  document.getElementById(s.price).value = item.price;
+  document.getElementById(s.cat).value   = item.cat;
+  document.getElementById(s.desc).value  = item.desc || '';
+
+  /* stars */
+  document.querySelectorAll('#'+s.stars+' .star-opt').forEach(x =>
+    x.classList.toggle('on', parseInt(x.dataset[s.dval]) <= spState.stars));
+
+  /* badge */
+  document.querySelectorAll('#'+s.badge+' .badge-opt').forEach(b => b.classList.remove('active'));
+  const ab = document.querySelector('#'+s.badge+' .badge-opt[data-'+s.dbadge+'="'+spState.badge+'"]');
+  if (ab) ab.classList.add('active');
+  else document.querySelector('#'+s.badge+' .badge-opt[data-'+s.dbadge+'=""]').classList.add('active');
+
+  /* image */
+  const prev = document.getElementById(s.prev);
+  const ph   = document.getElementById(s.ph);
+  if (item.img) { prev.src=item.img; prev.style.display='block'; ph.style.display='none'; }
+  else { prev.style.display='none'; prev.src=''; ph.style.display='block'; }
+  document.getElementById(s.img).value = '';
+
+  /* open panel */
+  document.getElementById(s.panel).classList.add('open');
+}
+
+function closeSidePanel(type) {
+  const s = SP[type];
+  document.getElementById(s.panel).classList.remove('open');
+  document.querySelectorAll('.item-card').forEach(c => c.classList.remove('selected'));
+  spState = { type:null, editingId:null, img:'', stars:5, badge:'' };
+}
+
+/* Save button handler */
+document.addEventListener('click', function(e) {
+  const type = e.target.id === 'spSaveBtn' ? 'manage' : e.target.id === 'shopSpSaveBtn' ? 'shop' : null;
+  if (!type || !spState.editingId) return;
+  const s = SP[type];
+  const name  = document.getElementById(s.name).value.trim();
+  const price = parseInt(document.getElementById(s.price).value);
+  const cat   = document.getElementById(s.cat).value;
+  const desc  = document.getElementById(s.desc).value.trim();
+  if (!name)  { alert('Enter item name.'); return; }
+  if (!price) { alert('Enter valid price.'); return; }
+  let items = loadItems();
+  const emojiMap = { pizzas:'🍕', slides:'🥪', offers:'🎁', pasta:'🍝', all:'🍽️' };
+  items = items.map(i => i.id !== spState.editingId ? i : {
+    ...i, name, price, cat, desc,
+    img:   spState.img || i.img,
+    emoji: emojiMap[cat] || '🍽️',
+    stars: spState.stars,
+    badge: spState.badge || null,
+  });
+  saveItems(items);
+  closeSidePanel(type);
+  if (type === 'manage') { renderManage(); renderDashboard(); }
+  if (type === 'shop')   renderShopGrid();
+  showToast('✅ Item updated!');
+});
+
+/* Stars click — both panels */
+document.addEventListener('click', function(e) {
+  const t = e.target.closest('.stars-select .star-opt');
+  if (!t || !spState.type) return;
+  const s = SP[spState.type];
+  const key = s.dval;
+  if (!t.dataset[key]) return;
+  spState.stars = parseInt(t.dataset[key]);
+  document.querySelectorAll('#'+s.stars+' .star-opt').forEach(x =>
+    x.classList.toggle('on', parseInt(x.dataset[key]) <= spState.stars));
+});
+
+/* Badge click — both panels */
+document.addEventListener('click', function(e) {
+  const t = e.target.closest('#spBadgeOpts .badge-opt, #shopSpBadgeOpts .badge-opt');
+  if (!t || !spState.type) return;
+  const s  = SP[spState.type];
+  const key = 'data-' + s.dbadge;
+  document.querySelectorAll('#'+s.badge+' .badge-opt').forEach(b => b.classList.remove('active'));
+  t.classList.add('active');
+  spState.badge = t.getAttribute('data-' + s.dbadge);
+});
+
+/* Image upload — both panels */
+['spUploadZone','shopSpUploadZone'].forEach(function(zoneId) {
+  document.addEventListener('DOMContentLoaded', function() {
+    const zone  = document.getElementById(zoneId);
+    const isShop = zoneId.startsWith('shop');
+    const input = document.getElementById(isShop ? 'shopSpImgInput' : 'spImgInput');
+    if (!zone || !input) return;
+    input.addEventListener('change', function(e){ handleSpImg(e.target.files[0], isShop); });
+    zone.addEventListener('dragover',  function(e){ e.preventDefault(); zone.classList.add('dragover'); });
+    zone.addEventListener('dragleave', function(){ zone.classList.remove('dragover'); });
+    zone.addEventListener('drop',      function(e){ e.preventDefault(); zone.classList.remove('dragover'); handleSpImg(e.dataTransfer.files[0], isShop); });
+  });
+});
+
+function handleSpImg(file, isShop) {
+  if (!file || !file.type.startsWith('image/')) { alert('Please select an image.'); return; }
+  if (file.size > 5*1024*1024) { alert('Image must be under 5MB.'); return; }
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    spState.img = e.target.result;
+    const prevId = isShop ? 'shopSpImgPreview' : 'spImgPreview';
+    const phId   = isShop ? 'shopSpUploadPlaceholder' : 'spUploadPlaceholder';
+    const prev   = document.getElementById(prevId);
+    const ph     = document.getElementById(phId);
+    prev.src = spState.img; prev.style.display = 'block'; ph.style.display = 'none';
+  };
+  reader.readAsDataURL(file);
+}
+
 function deleteItem(id) {
   if (!confirm('Delete this item?')) return;
   saveItems(loadItems().filter(i => i.id !== id));
@@ -1018,6 +1692,231 @@ function deleteTesti(id) {
 
 // Init
 renderDashboard();
+
+
+
+/* ══════════════════════════════════════
+   OUR TEAM
+══════════════════════════════════════ */
+const TEAM_KEY = 'pizzon_team_members';
+let teamImg64     = '';
+let teamEditId    = null;
+let tspImg64      = '';
+let tspEditId     = null;
+
+function loadTeam()      { const r=localStorage.getItem(TEAM_KEY); return r?JSON.parse(r):[]; }
+function saveTeam(items) { localStorage.setItem(TEAM_KEY, JSON.stringify(items)); }
+
+/* ── render card grid ── */
+function renderTeamGrid(){
+  const members = loadTeam();
+  const grid    = document.getElementById('teamCardGrid');
+  const count   = document.getElementById('team-count');
+  if(count) count.textContent = members.length + ' member' + (members.length!==1?'s':'');
+  if(!grid) return;
+  if(!members.length){
+    grid.innerHTML = '<div class="empty-tbl" style="grid-column:1/-1">No members yet. Add one above.</div>';
+    return;
+  }
+  grid.innerHTML = members.map(m => {
+    const imgHTML = m.img
+      ? `<img class="team-card-img" src="${m.img}" alt="${m.name}">`
+      : `<div class="team-card-emoji">👤</div>`;
+    return `
+      <div class="item-card" id="team-card-${m.id}">
+        ${imgHTML}
+        <div class="item-card-body">
+          <div class="item-card-head">
+            <div class="item-card-name">${m.name}</div>
+          </div>
+          <div class="team-card-role">${m.role}</div>
+          <div class="team-social-row">
+            ${m.facebook  ? `<a href="${m.facebook}"  target="_blank" title="Facebook"><i class="fa fa-facebook"></i></a>`   : ''}
+            ${m.twitter   ? `<a href="${m.twitter}"   target="_blank" title="Twitter"><i class="fa fa-twitter"></i></a>`     : ''}
+            ${m.instagram ? `<a href="${m.instagram}" target="_blank" title="Instagram"><i class="fa fa-instagram"></i></a>` : ''}
+            ${m.linkedin  ? `<a href="${m.linkedin}"  target="_blank" title="LinkedIn"><i class="fa fa-linkedin"></i></a>`   : ''}
+            ${m.youtube   ? `<a href="${m.youtube}"   target="_blank" title="YouTube"><i class="fa fa-youtube"></i></a>`     : ''}
+          </div>
+          <div class="item-card-actions">
+            <button class="edit-btn" onclick="openTeamPanel(${m.id})">✏️ Edit</button>
+            <button class="del-btn"  onclick="delTeamMember(${m.id})">🗑 Delete</button>
+          </div>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+/* ── Add form image upload ── */
+document.addEventListener('DOMContentLoaded', function(){
+  var zone  = document.getElementById('teamImgZone');
+  var input = document.getElementById('teamImgInput');
+  if(!zone||!input) return;
+  input.addEventListener('change', function(e){ handleTeamImg(e.target.files[0],'add'); });
+  zone.addEventListener('dragover',  function(e){ e.preventDefault(); zone.classList.add('dragover'); });
+  zone.addEventListener('dragleave', function(){ zone.classList.remove('dragover'); });
+  zone.addEventListener('drop',      function(e){ e.preventDefault(); zone.classList.remove('dragover'); handleTeamImg(e.dataTransfer.files[0],'add'); });
+  /* side panel upload */
+  var spZone  = document.getElementById('tspImgZone');
+  var spInput = document.getElementById('tspImgInput');
+  if(spZone && spInput){
+    spInput.addEventListener('change', function(e){ handleTeamImg(e.target.files[0],'sp'); });
+    spZone.addEventListener('dragover',  function(e){ e.preventDefault(); spZone.classList.add('dragover'); });
+    spZone.addEventListener('dragleave', function(){ spZone.classList.remove('dragover'); });
+    spZone.addEventListener('drop',      function(e){ e.preventDefault(); spZone.classList.remove('dragover'); handleTeamImg(e.dataTransfer.files[0],'sp'); });
+  }
+});
+
+function handleTeamImg(file, target){
+  if(!file||!file.type.startsWith('image/')){ alert('Please select an image.'); return; }
+  if(file.size>5*1024*1024){ alert('Image must be under 5MB.'); return; }
+  const reader = new FileReader();
+  reader.onload = e => {
+    const data  = e.target.result;
+    const prevId = target==='sp' ? 'tspImgPreview' : 'teamImgPreview';
+    const phId   = target==='sp' ? 'tspImgPlaceholder' : 'teamImgPlaceholder';
+    if(target==='sp') tspImg64 = data;
+    else              teamImg64 = data;
+    const prev = document.getElementById(prevId);
+    const ph   = document.getElementById(phId);
+    prev.src=data; prev.style.display='block'; ph.style.display='none';
+  };
+  reader.readAsDataURL(file);
+}
+
+/* ── Add Member ── */
+document.addEventListener('click', function(e){
+  if(e.target.id !== 'addTeamBtn') return;
+  const name = document.getElementById('teamName').value.trim();
+  const role = document.getElementById('teamRole').value.trim();
+  if(!name){ alert('Please enter member name.'); return; }
+  if(!role){ alert('Please enter member role.'); return; }
+  const fb  = document.getElementById('teamFb').value.trim();
+  const tw  = document.getElementById('teamTw').value.trim();
+  const ins = document.getElementById('teamIns').value.trim();
+  const lin = document.getElementById('teamLin').value.trim();
+  const yt  = document.getElementById('teamYt').value.trim();
+  let members = loadTeam();
+  if(teamEditId){
+    members = members.map(m => m.id!==teamEditId ? m : {
+      ...m, name, role, facebook:fb, twitter:tw, instagram:ins, linkedin:lin, youtube:yt,
+      img: teamImg64||m.img
+    });
+    saveTeam(members);
+    showToast('✅ Member updated on our-team.html!');
+    cancelTeamEdit();
+  } else {
+    members.push({ id:Date.now(), name, role, facebook:fb, twitter:tw, instagram:ins, linkedin:lin, youtube:yt, img:teamImg64 });
+    saveTeam(members);
+    resetTeamAddForm();
+    showToast('✅ Member added to our-team.html!');
+  }
+  renderTeamGrid();
+});
+
+function resetTeamAddForm(){
+  ['teamName','teamRole','teamFb','teamTw','teamIns','teamLin','teamYt'].forEach(id=>{ document.getElementById(id).value=''; });
+  teamImg64='';
+  const prev=document.getElementById('teamImgPreview');
+  const ph=document.getElementById('teamImgPlaceholder');
+  prev.style.display='none'; prev.src=''; ph.style.display='block';
+  document.getElementById('teamImgInput').value='';
+}
+
+/* ── Edit side panel ── */
+function openTeamPanel(id){
+  const m = loadTeam().find(x=>x.id===id);
+  if(!m) return;
+  tspEditId = id; tspImg64 = m.img||'';
+  document.getElementById('tspName').value = m.name;
+  document.getElementById('tspRole').value = m.role;
+  document.getElementById('tspFb').value   = m.facebook||'';
+  document.getElementById('tspTw').value   = m.twitter||'';
+  document.getElementById('tspIns').value  = m.instagram||'';
+  document.getElementById('tspLin').value  = m.linkedin||'';
+  document.getElementById('tspYt').value   = m.youtube||'';
+  const prev=document.getElementById('tspImgPreview');
+  const ph=document.getElementById('tspImgPlaceholder');
+  if(m.img){ prev.src=m.img; prev.style.display='block'; ph.style.display='none'; }
+  else{ prev.style.display='none'; ph.style.display='block'; }
+  document.getElementById('tspImgInput').value='';
+  /* highlight card */
+  document.querySelectorAll('#teamCardGrid .item-card').forEach(c=>c.classList.remove('selected'));
+  const card=document.getElementById('team-card-'+id);
+  if(card){ card.classList.add('selected'); card.scrollIntoView({behavior:'smooth',block:'nearest'}); }
+  document.getElementById('teamSidePanel').classList.add('open');
+}
+
+function closeTeamPanel(){
+  document.getElementById('teamSidePanel').classList.remove('open');
+  document.querySelectorAll('#teamCardGrid .item-card').forEach(c=>c.classList.remove('selected'));
+  tspEditId=null; tspImg64='';
+}
+
+/* Side panel save */
+document.addEventListener('click', function(e){
+  if(e.target.id !== 'tspSaveBtn') return;
+  if(!tspEditId) return;
+  const name = document.getElementById('tspName').value.trim();
+  const role = document.getElementById('tspRole').value.trim();
+  if(!name){ alert('Enter member name.'); return; }
+  if(!role){ alert('Enter member role.'); return; }
+  const fb  = document.getElementById('tspFb').value.trim();
+  const tw  = document.getElementById('tspTw').value.trim();
+  const ins = document.getElementById('tspIns').value.trim();
+  const lin = document.getElementById('tspLin').value.trim();
+  const yt  = document.getElementById('tspYt').value.trim();
+  let members = loadTeam();
+  members = members.map(m => m.id!==tspEditId ? m : {
+    ...m, name, role, facebook:fb, twitter:tw, instagram:ins, linkedin:lin, youtube:yt,
+    img: tspImg64||m.img
+  });
+  saveTeam(members);
+  closeTeamPanel();
+  renderTeamGrid();
+  showToast('✅ Member updated on our-team.html!');
+});
+
+/* ── Edit from add form (startTeamEdit) ── */
+function startTeamEdit(id){
+  const m = loadTeam().find(x=>x.id===id);
+  if(!m) return;
+  teamEditId=id; teamImg64=m.img||'';
+  document.getElementById('teamName').value=m.name;
+  document.getElementById('teamRole').value=m.role;
+  document.getElementById('teamFb').value=m.facebook||'';
+  document.getElementById('teamTw').value=m.twitter||'';
+  document.getElementById('teamIns').value=m.instagram||'';
+  document.getElementById('teamLin').value=m.linkedin||'';
+  document.getElementById('teamYt').value=m.youtube||'';
+  const prev=document.getElementById('teamImgPreview');
+  const ph=document.getElementById('teamImgPlaceholder');
+  if(m.img){ prev.src=m.img; prev.style.display='block'; ph.style.display='none'; }
+  else{ prev.style.display='none'; ph.style.display='block'; }
+  document.getElementById('teamImgInput').value='';
+  document.getElementById('teamFormTitle').textContent='✏️ Edit Member';
+  document.getElementById('addTeamBtn').innerHTML='💾 Save Changes';
+  document.getElementById('teamEditBar').classList.add('show');
+  document.getElementById('teamEditingName').textContent=m.name;
+  document.getElementById('cancelTeamBtn').style.display='inline-flex';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function cancelTeamEdit(){
+  teamEditId=null;
+  resetTeamAddForm();
+  document.getElementById('teamFormTitle').textContent='Add Team Member';
+  document.getElementById('addTeamBtn').innerHTML='👥 Add Member';
+  document.getElementById('teamEditBar').classList.remove('show');
+  document.getElementById('cancelTeamBtn').style.display='none';
+  document.querySelectorAll('#teamCardGrid .item-card').forEach(c=>c.classList.remove('selected'));
+}
+
+function delTeamMember(id){
+  if(!confirm('Delete this team member?')) return;
+  saveTeam(loadTeam().filter(m=>m.id!==id));
+  renderTeamGrid();
+  showToast('✓ Member deleted');
+}
 
 </script>
   </body>
