@@ -92,6 +92,123 @@ body {
   text-decoration: none;
 }
 .view-site-btn:hover { background: rgba(255,193,7,0.22); }
+/* ══════════════════════════════════════
+   RESPONSIVE SIDEBAR
+══════════════════════════════════════ */
+
+/* Hamburger button — hidden on desktop */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px 8px;
+  border-radius: 8px;
+  transition: background 0.15s;
+  margin-right: 8px;
+}
+.hamburger:hover { background: var(--light); }
+.hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--dark);
+  border-radius: 2px;
+  transition: all 0.3s ease;
+  transform-origin: center;
+}
+/* X animation when sidebar open */
+.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* Sidebar close button inside sidebar — mobile only */
+.sidebar-close-btn {
+  display: none;
+  position: absolute;
+  top: 16px;
+  right: 14px;
+  background: rgba(255,255,255,0.08);
+  border: none;
+  color: #fff;
+  font-size: 18px;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  transition: background 0.15s;
+}
+.sidebar-close-btn:hover { background: rgba(255,255,255,0.15); }
+
+/* Overlay behind sidebar on mobile */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  z-index: 49;
+  backdrop-filter: blur(2px);
+}
+.sidebar-overlay.show { display: block; }
+
+/* ── Mobile breakpoint ── */
+@media (max-width: 768px) {
+  /* sidebar slides off left by default */
+  .sidebar {
+    transform: translateX(-100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 200;
+    width: 260px;
+  }
+  /* open state */
+  .sidebar.open {
+    transform: translateX(0);
+  }
+  /* close button visible */
+  .sidebar-close-btn {
+    display: flex;
+  }
+  /* sidebar logo needs padding-right for close btn */
+  .sidebar-logo {
+    padding-right: 48px;
+  }
+  /* main takes full width */
+  .main {
+    margin-left: 0 !important;
+  }
+  /* topbar: show hamburger */
+  .hamburger {
+    display: flex;
+  }
+  /* content padding tighter */
+  .content {
+    padding: 16px;
+  }
+  /* stats grid 1 col on very small */
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  /* topbar title smaller */
+  .topbar-title {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .stats-grid {
+    grid-template-columns: 1fr 1fr !important;
+  }
+  .stat-val {
+    font-size: 20px !important;
+  }
+}
+
 
 /* ── Main ── */
 .main {
@@ -658,45 +775,52 @@ textarea { resize: vertical; min-height: 72px; }
   </head>
   <body>
 
-  <!-- ═══ Login Overlay ═══ -->
-  <div id="login-overlay">
-    <div class="login-box" id="login-box">
-      <div class="login-logo">
-        <div class="brand">GK <span>PIZZERIA</span></div>
-        <div class="sub">Admin Dashboard</div>
-      </div>
-      <div class="login-title">Welcome Back 👋</div>
-      <div class="login-subtitle">Sign in to access the admin panel</div>
-
-      <div class="login-error" id="loginError">❌ Incorrect email or password</div>
-
-      <div class="login-field">
-        <label>Email Address</label>
-        <div class="input-wrap">
-          <span class="login-icon input-icon">✉️</span>
-          <input type="email" id="loginEmail" placeholder="admin@example.com" autocomplete="email">
+    <!-- ═══ Login Overlay ═══ -->
+    <div id="login-overlay">
+      <div class="login-box" id="login-box">
+        <div class="login-logo">
+          <div class="brand">GK <span>PIZZERIA</span></div>
+          <div class="sub">Admin Dashboard</div>
         </div>
-      </div>
+        <div class="login-title">Welcome Back 👋</div>
+        <div class="login-subtitle">Sign in to access the admin panel</div>
 
-      <div class="login-field">
-        <label>Password</label>
-        <div class="input-wrap">
-          <span class="login-icon input-icon">🔒</span>
-          <input type="password" id="loginPass" placeholder="Enter password" autocomplete="current-password">
-          <button class="login-eye" id="togglePass" tabindex="-1">👁</button>
+        <div class="login-error" id="loginError">❌ Incorrect email or
+          password</div>
+
+        <div class="login-field">
+          <label>Email Address</label>
+          <div class="input-wrap">
+            <span class="login-icon input-icon">✉️</span>
+            <input type="email" id="loginEmail" placeholder="admin@example.com"
+              autocomplete="email">
+          </div>
         </div>
+
+        <div class="login-field">
+          <label>Password</label>
+          <div class="input-wrap">
+            <span class="login-icon input-icon">🔒</span>
+            <input type="password" id="loginPass" placeholder="Enter password"
+              autocomplete="current-password">
+            <button class="login-eye" id="togglePass" tabindex="-1">👁</button>
+          </div>
+        </div>
+
+        <button class="login-btn" id="loginBtn">Sign In →</button>
+
+        <div class="login-footer">GK PIZZERIA © 2025 — Admin Access Only</div>
       </div>
-
-      <button class="login-btn" id="loginBtn">Sign In →</button>
-
-      <div class="login-footer">GK PIZZERIA © 2025 — Admin Access Only</div>
     </div>
-  </div>
-
 
     <!-- Sidebar -->
-    <aside class="sidebar">
-      <div class="sidebar-logo">
+    <!-- Sidebar overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <aside class="sidebar" id="mainSidebar">
+      <div class="sidebar-logo" style="position:relative">
+        <button class="sidebar-close-btn" id="sidebarCloseBtn"
+          aria-label="Close menu">✕</button>
         <div class="brand">GK <span>PIZZERIA</span></div>
         <div class="sub">Admin Dashboard</div>
       </div>
@@ -740,7 +864,14 @@ textarea { resize: vertical; min-height: 72px; }
     <!-- Main -->
     <div class="main">
       <div class="topbar">
-        <div class="topbar-title" id="topbarTitle">Dashboard</div>
+        <div style="display:flex;align-items:center;gap:4px">
+          <button class="hamburger" id="hamburgerBtn" aria-label="Toggle menu">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+          <div class="topbar-title" id="topbarTitle">Dashboard</div>
+        </div>
         <div class="topbar-right">
           <div class="admin-name">Admin</div>
           <div class="avatar">A</div>
@@ -2182,6 +2313,80 @@ function delTeamMember(id){
     void loginBox.offsetWidth; /* reflow to restart animation */
     loginBox.classList.add('login-shake');
   }
+})();
+
+
+/* ══════════════════════════════════════
+   RESPONSIVE SIDEBAR JS
+══════════════════════════════════════ */
+(function () {
+  var sidebar  = document.getElementById('mainSidebar');
+  var overlay  = document.getElementById('sidebarOverlay');
+  var hamburger = document.getElementById('hamburgerBtn');
+  var closeBtn  = document.getElementById('sidebarCloseBtn');
+
+  function openSidebar() {
+    sidebar.classList.add('open');
+    overlay.classList.add('show');
+    hamburger.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeSidebar() {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('show');
+    hamburger.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function isMobile() {
+    return window.innerWidth <= 768;
+  }
+
+  /* hamburger click */
+  if (hamburger) {
+    hamburger.addEventListener('click', function () {
+      if (sidebar.classList.contains('open')) {
+        closeSidebar();
+      } else {
+        openSidebar();
+      }
+    });
+  }
+
+  /* close button inside sidebar */
+  if (closeBtn) {
+    closeBtn.addEventListener('click', closeSidebar);
+  }
+
+  /* overlay click — close sidebar */
+  if (overlay) {
+    overlay.addEventListener('click', closeSidebar);
+  }
+
+  /* nav item click — close sidebar on mobile */
+  document.querySelectorAll('.nav-item').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      if (isMobile()) {
+        closeSidebar();
+      }
+    });
+  });
+
+  /* close sidebar when resizing to desktop */
+  window.addEventListener('resize', function () {
+    if (!isMobile()) {
+      closeSidebar();
+      document.body.style.overflow = '';
+    }
+  });
+
+  /* keyboard ESC to close */
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && sidebar.classList.contains('open')) {
+      closeSidebar();
+    }
+  });
 })();
 
 </script>
