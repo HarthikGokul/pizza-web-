@@ -513,6 +513,27 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/animation.js"></script>
 	<script src="js/gk.js"></script>
+	<script src="js/theme-toggle.js"></script>
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js/v833ccba57c9e4d2798f2e76cebdd09a11778172276447" integrity="sha512-57MDmcccJXYtNnH+ZiBwzC4jb2rvgVCEokYN+L/nLlmO8rfYT/gIpW2A569iJ/3b+0UEasghjuZH/ma3wIs/EQ==" data-cf-beacon='{"version":"2024.11.0","token":"95ce996e22464a04b4191c57cd580e67","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+<!-- Pizzon Chatbot -->
+		<link rel="stylesheet" href="css/chatbot.css">
+		<button id="pz-cb-btn" aria-label="Open chat">&#x1F4AC;</button>
+		<div id="pz-cb-win">
+			<div class="pz-head">
+				<div class="pz-head-ico">&#x1F916;</div>
+				<div>
+					<div class="pz-head-name">GK PIZZERIA Chatbot</div>
+					<div class="pz-head-sub">We reply instantly</div>
+				</div>
+			</div>
+			<div class="pz-msgs" id="pz-msgs"></div>
+			<div class="pz-chips" id="pz-chips"></div>
+			<div class="pz-foot">
+				<input type="text" id="pz-inp" placeholder="Enter a message..."
+					autocomplete="off">
+				<button id="pz-snd" aria-label="Send">&#x27A4;</button>
+			</div>
+		</div>
+		<script src="js/chatbot.js"></script>
 </body>
 </html>

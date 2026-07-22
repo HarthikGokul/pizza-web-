@@ -81,6 +81,17 @@
 									</div>
 									<ul>
 										<li class="active"><a href="index.html">Home</a></li>
+										<li><a href="about.html">About Us</a></li>
+										<li>
+											<span class="opener"></span>
+											<a href="javascript:void(0)">Menu</a>
+											<ul class="dropdown-content">
+												<li><a href="our-menu.html">Our Menu</a></li>
+												<li><a href="our-team.html">Our Team</a></li>
+												<li><a href="book-now.html">Book Now</a></li>
+												<li><a href="admin-panel.html">Admin</a></li>
+											</ul>
+										</li>
 										<li>
 											<span class="opener"></span>
 											<a href="javascript:void(0)">Shop</a>
@@ -91,17 +102,7 @@
 												<li><a href="checkout.html">Checkout</a></li>
 											</ul>
 										</li>
-										<li>
-											<span class="opener"></span>
-											<a href="javascript:void(0)">Pages</a>
-											<ul class="dropdown-content">
-												<li><a href="about.html">About Us</a></li>
-												<li><a href="our-menu.html">Our Menu</a></li>
-												<li><a href="our-team.html">Our Team</a></li>
-												<li><a href="book-now.html">Book Now</a></li>
-												<li><a href="admin-panel.html">Admin</a></li>
-											</ul>
-										</li>
+										
 										<li>
 											<span class="opener"></span>
 											<a href="javascript:void(0)">Blog</a>
@@ -963,7 +964,7 @@
 							<h6 class="footer-title text-uppercase">Information</h6>
 							<ul class="footer-menu">
 								<li><a href="index.html">Home</a></li>
-								<li><a href="blog-left.html">Blog</a></li>
+								<li><a href="blog-right.html">Blog</a></li>
 								<li><a href="about.html">About Us</a></li>
 								<li><a href="our-menu.html">Menu</a></li>
 								<li><a href="contact-us.html">Contact Us</a></li>
@@ -1006,7 +1007,7 @@
 								<p>Signup and get exclusive offers and coupon codes</p>
 							</div>
 							<div class="footer-sign-up">
-								<a href="#" class="btn-ct btn-small">Sign Up</a>
+								<a href="admin-panel.html" class="btn-ct btn-small">Sign Up</a>
 							</div>
 						</div>
 						<div class="col-xl-12 col-lg-12 col-md-12 terms-menu">
@@ -1169,8 +1170,8 @@
 		<script src="js/animation.js"></script>
 		<script src="js/owl.carousel.min.js"></script>
 		<script src="js/gk.js"></script>
- 
-		<!-- ✅ Admin Panel Inject: Menu Items + Testimonials for index.html -->   
+
+		<!-- ✅ Admin Panel Inject: Menu Items + Testimonials for index.html -->
 		<script>
 	(function () {
 	  var MENU_KEY  = 'pizzon_menu_items';
@@ -1301,6 +1302,28 @@
 			integrity="sha512-57MDmcccJXYtNnH+ZiBwzC4jb2rvgVCEokYN+L/nLlmO8rfYT/gIpW2A569iJ/3b+0UEasghjuZH/ma3wIs/EQ=="
 			data-cf-beacon='{"version":"2024.11.0","token":"95ce996e22464a04b4191c57cd580e67","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}'
 			crossorigin="anonymous"></script>
-			<script src="js/theme-toggle.js"></script>
+		<script src="js/theme-toggle.js"></script>
+
+		<!-- Pizzon Chatbot -->
+		<link rel="stylesheet" href="css/chatbot.css">
+		<button id="pz-cb-btn" aria-label="Open chat">&#x1F4AC;</button>
+		<div id="pz-cb-win">
+			<div class="pz-head">
+				<div class="pz-head-ico">&#x1F916;</div>
+				<div>
+					<div class="pz-head-name">GK PIZZERIA Chatbot</div>
+					<div class="pz-head-sub">We reply instantly</div>
+				</div>
+			</div>
+			<div class="pz-msgs" id="pz-msgs"></div>
+			<div class="pz-chips" id="pz-chips"></div>
+			<div class="pz-foot">
+				<input type="text" id="pz-inp" placeholder="Enter a message..."
+					autocomplete="off">
+				<button id="pz-snd" aria-label="Send">&#x27A4;</button>
+			</div>
+		</div>
+		<script src="js/chatbot.js"></script>
+
 	</body>
 </html>
